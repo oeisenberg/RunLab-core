@@ -1,0 +1,28 @@
+# Git Ignore file
+
+# General
+# Ignore VS Code's files
+/.vscode/
+**/package.json
+
+# Ignore Maven files
+.classpath
+.project
+pom.xml
+/runlab/target/
+
+# Back End:
+# Ignore node modules that have been installed
+**/node_modules/
+
+# Ignore .pyc files
+**.pyc
+
+# Ignore .prefs files
+**.prefs
+
+# Ignore class files
+**.class
+
+# Ignore keys
+RunLab Dashboard.keys

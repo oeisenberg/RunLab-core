@@ -1,0 +1,17 @@
+Runlab:
+    Back-end:
+        Tasks:
+            ☐ 
+            ☐ 
+
+General:
+    ☐ Integrate React @techstack @critical
+    ☐ Integrate axois @techstack @high 
+    ☐ Integrate MaterialUI @techstack @high
+    ☐ 
+
+
+Ctrl+Enter - add new task
+Alt+d - mark completed
+Alt+c - mark cancelled
+Tag tasks via @ 

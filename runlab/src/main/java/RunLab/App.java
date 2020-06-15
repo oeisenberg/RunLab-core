@@ -23,7 +23,7 @@ public class App {
         try {
             Activity activity = queryActivity();
 
-            activity.getMap();
+            // activity.getMap();
         } catch (InterruptedException e) {
             e.printStackTrace();
             return;

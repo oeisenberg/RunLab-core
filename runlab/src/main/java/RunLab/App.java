@@ -22,8 +22,6 @@ public class App {
 
         try {
             Activity activity = queryActivity();
-
-            // activity.getMap();
         } catch (InterruptedException e) {
             e.printStackTrace();
             return;

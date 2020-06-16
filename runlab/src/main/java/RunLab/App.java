@@ -21,7 +21,7 @@ public class App {
     public static void main(String[] args) throws IOException {
 
         try {
-            Activity activity = queryActivity();
+            queryActivity(); // Activity activity = 
         } catch (InterruptedException e) {
             e.printStackTrace();
             return;
@@ -30,7 +30,7 @@ public class App {
         
     }
 
-    private static Activity queryActivity() throws IOException, InterruptedException {
+    private static void queryActivity() throws IOException, InterruptedException {
         String activity_id = "3470420931";
         String auth = "Bearer 1e23b0779bbce5326ee9bcd1904f3ad523f733a0";
 
@@ -45,7 +45,7 @@ public class App {
             String json = br.readLine();
             br.close();
 
-            return new Activity(json);
+            // return new Activity(json);
         } else {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -57,7 +57,7 @@ public class App {
 
             response = client.send(request, BodyHandlers.ofString());
 
-            return new Activity(response.body());
+            // return new Activity(response.body());
         }
     }
 

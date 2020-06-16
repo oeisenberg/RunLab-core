@@ -149,10 +149,6 @@ public class Strava {
         }
     }
 
-    // use client id, secret, code to make request and get user auth code
-    // https://www.strava.com/oauth/token?client_id={{client_id}}&client_secret={{client_secret}}&code={{code}}&grant_type=authorization_code
-    // save user access code and refresh token for future requests
-    // athlete obj serialised
     public void getAuthTokens(){
         if (setKeys()){
             try {
@@ -163,8 +159,8 @@ public class Strava {
                 this.access_token = JsonConverter.toString(attributes, "access_token");
                 this.refresh_token = JsonConverter.toString(attributes, "refresh_token");
 
-                // write these to file 
-
+                // write these to file, save user access code and refresh token for future requests
+                // athlete obj serialised
             } catch (Exception e){
                 e.printStackTrace();
             }

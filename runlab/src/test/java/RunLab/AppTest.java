@@ -18,4 +18,18 @@ public class AppTest
         boolean b = stravaWrapper.pull();
         assertTrue( b );
     }
+
+    @Test
+    public void authToken(){
+        Strava stravaWrapper = new Strava();
+        stravaWrapper.getAuthTokens();
+        assertTrue( true );
+    }
+
+    @Test
+    public void profile(){
+        Strava stravaWrapper = new Strava();
+        stravaWrapper.getProfile();
+        assertTrue( true );
+    }
 }

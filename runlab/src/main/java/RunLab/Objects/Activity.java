@@ -1,6 +1,7 @@
 package RunLab.Objects;
 
 import java.util.Map;
+import java.time.ZonedDateTime;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -21,7 +22,7 @@ public class Activity {
     private float moving_time;
     private float elapsed_time;
     private float total_elevation_gain;
-    private float start_date;
+    private ZonedDateTime start_date;
     private float start_latlng; // create latlong object
     private float end_latlng;
     private Route route; // create route object (id, ployline/summary polyline)
@@ -49,7 +50,7 @@ public class Activity {
         moving_time =  JsonConverter.toFloat(attributes, vars[3]);
         elapsed_time =  JsonConverter.toFloat(attributes, vars[4]);
         total_elevation_gain =  JsonConverter.toFloat(attributes, vars[5]);
-        // start_date =  JsonConverter.toFloat(attributes, vars[6]); // need to change to date time 
+        start_date =  JsonConverter.toDateTime(attributes, vars[6]);
         // start_latlng =  JsonConverter.toFloat(attributes, vars[7]); // need to change to latlng
         // end_latlng =  JsonConverter.toFloat(attributes, vars[8]); // need to change to latlng
         route = JsonConverter.toRoute(attributes, vars[9]);

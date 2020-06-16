@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import RunLab.Objects.Route;
 import RunLab.Objects.Polyline;
@@ -42,6 +44,12 @@ public class JsonConverter {
         // JSON responce contains '"' s that are unnecessary.
         String s = attributes.get(param).toString(); 
         return s.substring(1, s.length()-1);
+    }
+
+    public static ZonedDateTime toDateTime(Map<String, Object> attributes, String param){
+        String s = JsonConverter.toString(attributes, param);
+        ZonedDateTime DateTime = ZonedDateTime.parse(s);
+        return DateTime;
     }
 
     public static Route toRoute(Map<String, Object> attributes, String param){

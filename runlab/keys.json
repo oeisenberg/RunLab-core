@@ -2,5 +2,10 @@
     "Strava": {
         "client_id" : <client_id>,
         "client_secret" : <client_secret>
+    },
+    "User_Details" : {
+        "code" : <code>,
+        "access_token" : <access_token>,
+        "refresh_token" : <refresh_token>
     }
 }

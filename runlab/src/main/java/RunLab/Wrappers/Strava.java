@@ -1,10 +1,15 @@
 package RunLab.Wrappers;
 
 import java.io.File;
+import java.util.Map;
 import java.io.FileReader;
 import java.io.BufferedReader;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import RunLab.Objects.Activity;
+import RunLab.Utility.JsonConverter;
 
 public class Strava {
     public Strava() {
@@ -15,7 +20,11 @@ public class Strava {
     // if fails due to no new data dataUpdated <- false
     public boolean pull(){
         String rawActivity = mockActivityStavaAPIRequest();
-        Activity activity = new Activity(rawActivity);
+        
+        JsonObject jsonObject = (JsonObject) JsonParser.parseString(rawActivity);
+        Map<String, Object> attributes = JsonConverter.toMap(jsonObject);
+
+        Activity activity = new Activity(attributes);
         // save activity
         
         return true;

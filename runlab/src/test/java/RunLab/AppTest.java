@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import RunLab.Objects.codeModel;
+import RunLab.Models.codeModel;
 import RunLab.Wrappers.Strava;
 
 /**

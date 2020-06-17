@@ -1,31 +1,30 @@
 package RunLab.Wrappers;
 
-import java.util.Map;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Map;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import com.google.maps.errors.InvalidRequestException;
 
+import RunLab.Exceptions.InvalidRequest;
+import RunLab.Models.KeysModel;
+import RunLab.Models.codeModel;
 import RunLab.Objects.Activity;
 import RunLab.Utility.JsonConverter;
-
-import RunLab.Exceptions.InvalidMapboxProfile;
-import RunLab.Exceptions.InvalidRequest;
 
 // import io.micrometer.core.instrument.config.validate.Validated.Invalid;
 
@@ -38,7 +37,6 @@ public class Strava {
     private String access_code;
     private String access_token; // user's
     private String refresh_token; // user's
-    private String auth;
 
     public Strava() {
 
@@ -77,31 +75,6 @@ public class Strava {
         }
     }
 
-    private boolean setKeys() {
-        File file = new File("C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
-
-        try {
-            JsonObject object = (JsonObject) JsonParser.parseReader(new FileReader(file));
-            Map<String, Object> attributes = JsonConverter.toMap(object);
-            Map<String, Object> stravaAttributes = JsonConverter.toMap((JsonObject) attributes.get("Strava"));
-            Map<String, Object> userAttributes = JsonConverter.toMap((JsonObject) attributes.get("User_Details"));
-
-            this.client_id = JsonConverter.toInt(stravaAttributes, "client_id");
-            this.client_secret = JsonConverter.toString(stravaAttributes, "client_secret");
-            this.access_code = JsonConverter.toString(userAttributes, "code");
-            this.access_token = JsonConverter.toString(userAttributes, "access_token");
-            this.refresh_token = JsonConverter.toString(userAttributes, "refresh_token");
-
-            return true;
-        } catch (FileNotFoundException fnfE) {
-            System.err.println("File read failed");
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     private HttpResponse<String> makeAPIRequest(String uri) throws InvalidRequest {
         if (this.access_code == null) {
             File file = new File("C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
@@ -114,43 +87,74 @@ public class Strava {
                 this.access_token = JsonConverter.toString(userAttributes, "access_token");
                 this.refresh_token = JsonConverter.toString(userAttributes, "refresh_token");
             } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
-                
+
             }
-            
         }
 
-        HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(this.url+"api/v3/"+uri))
-            .header("Authorization", "Bearer " + this.access_token)
-            .build();
-        
-        return makeRequest(request);
-    }
-
-    private HttpResponse<String> makeOauthRequest(String uri) throws InvalidRequest{
-        HttpRequest request = HttpRequest.newBuilder()
-            .POST(BodyPublishers.ofString(""))
-            .uri(URI.create(this.url+"oauth/"+uri))
-            .build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(this.url + "api/v3/" + uri))
+                .header("Authorization", "Bearer " + this.access_token).build();
 
         return makeRequest(request);
     }
 
-    private HttpResponse<String> makeRequest(HttpRequest request) throws InvalidRequest{
+    private HttpResponse<String> makeOauthRequest(String uri) throws InvalidRequest {
+        HttpRequest request = HttpRequest.newBuilder().POST(BodyPublishers.ofString(""))
+                .uri(URI.create(this.url + "oauth/" + uri)).build();
+
+        return makeRequest(request);
+    }
+
+    private HttpResponse<String> makeRequest(HttpRequest request) throws InvalidRequest {
         HttpClient client = HttpClient.newHttpClient();
-        try{
+        try {
             return client.send(request, BodyHandlers.ofString());
-        } catch(IOException ioE) {
+        } catch (IOException ioE) {
             System.err.println("IOException during Strava request");
             throw new InvalidRequest("");
-        } catch(InterruptedException iE) {
+        } catch (InterruptedException iE) {
             System.err.println("InterruptedException during Strava request");
             throw new InvalidRequest("");
         }
     }
 
-    public void getAuthTokens(){
-        if (setKeys()){
+    public boolean readKeys() {
+        File file = new File("C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
+
+        try {
+            JsonObject object = (JsonObject) JsonParser.parseReader(new FileReader(file));
+            Map<String, Object> attributes = JsonConverter.toMap(object);
+
+            this.client_id = JsonConverter.toInt(attributes, "client_id");
+            this.client_secret = JsonConverter.toString(attributes, "client_secret");
+            
+            return true;
+        } catch (FileNotFoundException fnfE) {
+            System.err.println("File read failed");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void saveKeys() {  	
+        Gson gson = new Gson();
+        KeysModel keys = new KeysModel(this.client_id, this.client_secret, this.access_code, this.access_token, this.refresh_token);
+        String filepath = "C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json";
+        try {
+            FileWriter writer = new FileWriter(filepath);
+            gson.toJson(keys, writer);
+            writer.flush();
+            writer.close();
+        } catch (JsonIOException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean setAuthTokens(codeModel responce){
+        this.access_code = responce.getCode();
+
+        if (readKeys()){
             try {
                 HttpResponse<String> r = makeOauthRequest("token?client_id="+this.client_id+"&client_secret="+this.client_secret+"&code="+this.access_code+"&grant_type=authorization_code");
                 String responceBody = r.body();
@@ -160,11 +164,13 @@ public class Strava {
                 this.refresh_token = JsonConverter.toString(attributes, "refresh_token");
 
                 // write these to file, save user access code and refresh token for future requests
-                // athlete obj serialised
+                saveKeys();
             } catch (Exception e){
                 e.printStackTrace();
+                return false;
             }
         }
+        return true;
     }
 
     // List Athlete Activities 

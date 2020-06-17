@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import RunLab.Objects.codeModel;
 import RunLab.Wrappers.Strava;
 
 /**
@@ -20,10 +21,24 @@ public class AppTest
     }
 
     @Test
-    public void authToken(){
+    public void testAuth()
+    {
         Strava stravaWrapper = new Strava();
-        stravaWrapper.getAuthTokens();
-        assertTrue( true );
+        codeModel responce = new codeModel("mock code");
+        stravaWrapper.setAuthTokens(responce);
+    }
+
+    @Test
+    public void testReadKeys(){
+        Strava stravaWrapper = new Strava();
+        stravaWrapper.readKeys();
+        stravaWrapper.saveKeys();
+    }
+
+    @Test
+    public void testSaveKeys(){
+        Strava stravaWrapper = new Strava();
+        stravaWrapper.saveKeys();
     }
 
     @Test

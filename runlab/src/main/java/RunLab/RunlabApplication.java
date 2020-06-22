@@ -18,6 +18,7 @@ public class RunlabApplication {
 
     Strava stravaWrapper = new Strava();
     Mapbox mapboxWrapper = new Mapbox("walking");
+    MongoDB dbWrappers = new MongoDB();
 
 	public static void main(String[] args) {
         System.setProperty("server.servlet.context-path", "/Runlab");

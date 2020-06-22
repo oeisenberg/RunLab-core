@@ -173,6 +173,43 @@ public class Strava {
         return true;
     }
 
+    private boolean setRefreshToken() {
+        File file = new File("C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
+
+        try {
+            JsonObject object = (JsonObject) JsonParser.parseReader(new FileReader(file));
+            Map<String, Object> attributes = JsonConverter.toMap(object);
+
+            this.refresh_token = JsonConverter.toString(attributes, "refresh_token");            
+            
+            return true;
+        } catch (FileNotFoundException fnfE) {
+            System.err.println("File read failed");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean refreshAuthTokens(){
+        if (setRefreshToken()){
+            try{
+                HttpResponse<String> r = makeOauthRequest("token?client_id="+this.client_id+"&client_secret="+this.client_secret+"&grant_type=refresh_token&refresh_token="+this.refresh_token);
+                String responceBody = r.body();
+                
+                Map<String, Object> attributes = JsonConverter.toMap((JsonObject) JsonParser.parseString(responceBody));
+                this.access_token = JsonConverter.toString(attributes, "access_token");
+                this.refresh_token = JsonConverter.toString(attributes, "refresh_token");
+                return true;
+            } catch (Exception e){
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
+    }
+
     // List Athlete Activities 
     public void getActivities(){
 

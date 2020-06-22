@@ -47,4 +47,11 @@ public class AppTest
         stravaWrapper.getProfile();
         assertTrue( true );
     }
+
+    @Test
+    public void testRefreshTokens(){
+        Strava stravaWrapper = new Strava();
+        stravaWrapper.readKeys();
+        assertTrue( stravaWrapper.refreshAuthTokens() );
+    }
 }

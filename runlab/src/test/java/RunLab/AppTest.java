@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import RunLab.Models.codeModel;
+import RunLab.Wrappers.MongoDB;
 import RunLab.Wrappers.Strava;
 
 /**
@@ -53,5 +54,11 @@ public class AppTest
         Strava stravaWrapper = new Strava();
         stravaWrapper.readKeys();
         assertTrue( stravaWrapper.refreshAuthTokens() );
+    }
+
+    @Test
+    public void testMongoDB(){
+        MongoDB db = new MongoDB();
+        assertTrue( true );
     }
 }

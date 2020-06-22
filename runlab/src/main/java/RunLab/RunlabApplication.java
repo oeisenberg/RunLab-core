@@ -39,7 +39,7 @@ public class RunlabApplication {
     @GetMapping("/oauth")
     public Responce oauthGET(){
         // pull in and update data
-        boolean dataUpdated = true; // update using refresh token, stub 
+        boolean dataUpdated = this.stravaWrapper.refreshAuthTokens();
 
         if(dataUpdated){
             return new Success();

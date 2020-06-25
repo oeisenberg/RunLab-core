@@ -62,12 +62,4 @@ public class Activity {
         laps = JsonConverter.toLaps(attributes, vars[20]);
     }
     
-    // public String getMap(){
-    //     JsonObject map = (JsonObject) attributes.get("map");
-
-    //     String polyline = map.get("polyline").getAsString();
-        
-    //     return polyline; // Let JS decode polyline, Maps JavaScript API in google.maps.geometry.encoding namespace
-    // }
-
 }

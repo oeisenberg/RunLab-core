@@ -137,7 +137,7 @@ public class Strava {
         }
     }
 
-    public void saveKeys() {  	
+    public boolean saveKeys() {  	
         Gson gson = new Gson();
         KeysModel keys = new KeysModel(this.client_id, this.client_secret, this.access_code, this.access_token, this.refresh_token);
         String filepath = "C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json";
@@ -148,7 +148,9 @@ public class Strava {
             writer.close();
         } catch (JsonIOException | IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public boolean setAuthTokens(codeModel responce){
@@ -164,7 +166,7 @@ public class Strava {
                 this.refresh_token = JsonConverter.toString(attributes, "refresh_token");
 
                 // write these to file, save user access code and refresh token for future requests
-                saveKeys();
+                return saveKeys();
             } catch (Exception e){
                 e.printStackTrace();
                 return false;
@@ -180,6 +182,8 @@ public class Strava {
             JsonObject object = (JsonObject) JsonParser.parseReader(new FileReader(file));
             Map<String, Object> attributes = JsonConverter.toMap(object);
 
+            // this.client_id = JsonConverter.toInt(attributes, "client_id");
+            // this.client_secret = JsonConverter.toString(attributes, "client_secret"); 
             this.refresh_token = JsonConverter.toString(attributes, "refresh_token");            
             
             return true;

@@ -2,7 +2,7 @@ Runlab:
     Back-end:
         Tasks:
             ☐ check status of refresh token, use to regen keys
-            ☐ 
+            ☐ throw error instead of bool T/F returns
 
 General:
     ☐ Integrate React @techstack @critical

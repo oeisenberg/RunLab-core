@@ -14,6 +14,8 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Map;
 
+import org.springframework.http.HttpEntity;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
@@ -47,13 +49,20 @@ public class Strava {
     public boolean pull() {
         String rawActivity = mockActivityStavaAPIRequest();
 
-        JsonObject jsonObject = (JsonObject) JsonParser.parseString(rawActivity);
-        Map<String, Object> attributes = JsonConverter.toMap(jsonObject);
+        // JsonObject jsonObject = (JsonObject) JsonParser.parseString(rawActivity);
+        // Map<String, Object> attributes = JsonConverter.toMap(jsonObject);
 
-        Activity activity = new Activity(attributes);
+        // Activity activity = new Activity(attributes);
         // save activity
 
         return true;
+    }
+
+    public HttpResponse<String> getAtheleteStats(String atheleteID) throws InvalidRequest{
+        
+        HttpResponse<String> response = makeAPIRequest("athletes/" + atheleteID + "/stats");
+        
+        return response;
     }
 
     /*
@@ -61,7 +70,7 @@ public class Strava {
      * - presaved as a string.
      */
     private String mockActivityStavaAPIRequest() {
-        File file = new File("C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\data\\asTxt\\GetActivity.txt");
+        File file = new File("W:\\Dropbox\\Programming\\RunLab\\backend\\data\\asTxt\\GetActivity.txt");
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -77,15 +86,15 @@ public class Strava {
 
     private HttpResponse<String> makeAPIRequest(String uri) throws InvalidRequest {
         if (this.access_code == null) {
-            File file = new File("C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
+            File file = new File("W:\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
             JsonObject object;
 
             try {
                 object = (JsonObject) JsonParser.parseReader(new FileReader(file));
                 Map<String, Object> attributes = JsonConverter.toMap(object);
-                Map<String, Object> userAttributes = JsonConverter.toMap((JsonObject) attributes.get("User_Details"));
-                this.access_token = JsonConverter.toString(userAttributes, "access_token");
-                this.refresh_token = JsonConverter.toString(userAttributes, "refresh_token");
+                // Map<String, Object> userAttributes = JsonConverter.toMap((JsonObject) attributes.get("User_Details"));
+                this.access_token = JsonConverter.toString(attributes, "access_token");
+                this.refresh_token = JsonConverter.toString(attributes, "refresh_token");
             } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
 
             }
@@ -118,8 +127,7 @@ public class Strava {
     }
 
     public boolean readKeys() {
-        File file = new File("C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
-
+        File file = new File("W:\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
         try {
             JsonObject object = (JsonObject) JsonParser.parseReader(new FileReader(file));
             Map<String, Object> attributes = JsonConverter.toMap(object);
@@ -140,7 +148,7 @@ public class Strava {
     public boolean saveKeys() {  	
         Gson gson = new Gson();
         KeysModel keys = new KeysModel(this.client_id, this.client_secret, this.access_code, this.access_token, this.refresh_token);
-        String filepath = "C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json";
+        String filepath = "W:\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json";
         try {
             FileWriter writer = new FileWriter(filepath);
             gson.toJson(keys, writer);
@@ -176,7 +184,7 @@ public class Strava {
     }
 
     private boolean setRefreshToken() {
-        File file = new File("C:\\Users\\olive\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
+        File file = new File("W:\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
 
         try {
             JsonObject object = (JsonObject) JsonParser.parseReader(new FileReader(file));

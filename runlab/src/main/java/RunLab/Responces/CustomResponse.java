@@ -2,7 +2,7 @@ package RunLab.Responces;
 
 import java.net.http.HttpResponse;
 
-public abstract class Response { // implements HttpResponse ?
+public abstract class CustomResponse { // implements HttpResponse ?
     protected int status = 400;
 
     protected String message;

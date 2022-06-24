@@ -6,15 +6,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.util.Map;
 
-import org.springframework.http.HttpEntity;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -28,11 +25,13 @@ import RunLab.Models.codeModel;
 import RunLab.Objects.Activity;
 import RunLab.Utility.JsonConverter;
 
+
 // import io.micrometer.core.instrument.config.validate.Validated.Invalid;
 
 public class Strava {
 
     private String url = "https://www.strava.com/";
+    private OkHttpClient client = new OkHttpClient();
 
     private Integer client_id;
     private String client_secret;
@@ -58,9 +57,9 @@ public class Strava {
         return true;
     }
 
-    public HttpResponse<String> getAtheleteStats(String atheleteID) throws InvalidRequest{
+    public Response getAtheleteStats(String atheleteID) throws InvalidRequest{
         
-        HttpResponse<String> response = makeAPIRequest("athletes/" + atheleteID + "/stats");
+        Response response = makeAPIRequest("athletes/" + atheleteID + "/stats");
         
         return response;
     }
@@ -84,7 +83,7 @@ public class Strava {
         }
     }
 
-    private HttpResponse<String> makeAPIRequest(String uri) throws InvalidRequest {
+    private Response makeAPIRequest(String uri) throws InvalidRequest {
         if (this.access_code == null) {
             File file = new File("W:\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
             JsonObject object;
@@ -100,28 +99,28 @@ public class Strava {
             }
         }
 
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(this.url + "api/v3/" + uri))
-                .header("Authorization", "Bearer " + this.access_token).build();
+        Request request = new Request.Builder()
+            .url(this.url + "api/v3/" + uri)
+            .header("Authorization", "Bearer " + this.access_token)
+            .build();
 
         return makeRequest(request);
     }
 
-    private HttpResponse<String> makeOauthRequest(String uri) throws InvalidRequest {
-        HttpRequest request = HttpRequest.newBuilder().POST(BodyPublishers.ofString(""))
-                .uri(URI.create(this.url + "oauth/" + uri)).build();
+    private Response makeOauthRequest(String uri) throws InvalidRequest {
+        Request request = new Request.Builder()
+            .post(null)
+            .url(this.url + "oauth/" + uri)
+            .build();
 
         return makeRequest(request);
     }
 
-    private HttpResponse<String> makeRequest(HttpRequest request) throws InvalidRequest {
-        HttpClient client = HttpClient.newHttpClient();
+    private Response makeRequest(Request request) throws InvalidRequest {
         try {
-            return client.send(request, BodyHandlers.ofString());
+            return this.client.newCall(request).execute();
         } catch (IOException ioE) {
             System.err.println("IOException during Strava request");
-            throw new InvalidRequest("");
-        } catch (InterruptedException iE) {
-            System.err.println("InterruptedException during Strava request");
             throw new InvalidRequest("");
         }
     }
@@ -166,8 +165,8 @@ public class Strava {
 
         if (readKeys()){
             try {
-                HttpResponse<String> r = makeOauthRequest("token?client_id="+this.client_id+"&client_secret="+this.client_secret+"&code="+this.access_code+"&grant_type=authorization_code");
-                String responceBody = r.body();
+                Response r = makeOauthRequest("token?client_id="+this.client_id+"&client_secret="+this.client_secret+"&code="+this.access_code+"&grant_type=authorization_code");
+                String responceBody = r.body().string();
                 Map<String, Object> attributes = JsonConverter.toMap((JsonObject) JsonParser.parseString(responceBody));
 
                 this.access_token = JsonConverter.toString(attributes, "access_token");
@@ -207,8 +206,8 @@ public class Strava {
     public boolean refreshAuthTokens(){
         if (setRefreshToken()){
             try{
-                HttpResponse<String> r = makeOauthRequest("token?client_id="+this.client_id+"&client_secret="+this.client_secret+"&grant_type=refresh_token&refresh_token="+this.refresh_token);
-                String responceBody = r.body();
+                Response r = makeOauthRequest("token?client_id="+this.client_id+"&client_secret="+this.client_secret+"&grant_type=refresh_token&refresh_token="+this.refresh_token);
+                String responceBody = r.body().string();
                 
                 Map<String, Object> attributes = JsonConverter.toMap((JsonObject) JsonParser.parseString(responceBody));
                 this.access_token = JsonConverter.toString(attributes, "access_token");
@@ -236,9 +235,9 @@ public class Strava {
 
     public void getProfile(){
         try {
-            HttpResponse<String> r = makeAPIRequest("athlete");
-             if (r.statusCode() == 200){
-                String responceBody = r.body();
+            Response r = makeAPIRequest("athlete");
+             if (r.code() == 200){
+                String responceBody = r.body().string();
                 Map<String, Object> attributes = JsonConverter.toMap((JsonObject) JsonParser.parseString(responceBody));
                 // assign to profile obj
             } else {

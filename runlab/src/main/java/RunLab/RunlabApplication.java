@@ -1,9 +1,12 @@
 package RunLab;
 
-import java.net.http.HttpResponse;
+import java.io.IOException;
+
+import okhttp3.Response;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +18,7 @@ import RunLab.Models.*;
 import RunLab.Responces.*;
 import RunLab.Wrappers.*;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @SpringBootApplication
 
@@ -30,7 +34,7 @@ public class RunlabApplication {
     }
 
     @GetMapping("/refresh")
-    public Response refresh() {
+    public CustomResponse refresh() throws InvalidRequest {
         // pull in and update data
         boolean dataUpdated = this.stravaWrapper.pull();
 
@@ -47,23 +51,14 @@ public class RunlabApplication {
     }
 
     @GetMapping(value = { "/getAtheleteStatistics/{atheleteID}" })
-    public Response getAtheleteStatistics(@PathVariable(value = "atheleteID") String atheleteID) {
-        try {
-            HttpResponse<String> response = this.stravaWrapper.getAtheleteStats(atheleteID);
-            if (response.statusCode() == 200){
-                Response myResponse = new Success();
-                myResponse.ingest(response);
-                return myResponse;
-            }
-        } catch (InvalidRequest e) {
-            return new Failure();
-        }
+    public Response getAtheleteStatistics(@PathVariable(value = "atheleteID") String atheleteID) throws InvalidRequest, IOException {
+        Response response = this.stravaWrapper.getAtheleteStats(atheleteID);
 
-        return new Failure();
+        return response;        
     }
 
     @GetMapping("/oauth")
-    public Response oauthGET() {
+    public CustomResponse oauthGET() {
         // pull in and update data
         boolean dataUpdated = this.stravaWrapper.refreshAuthTokens();
 
@@ -75,7 +70,7 @@ public class RunlabApplication {
     }
 
     @PostMapping("/oauth")
-    public Response oauthPOST(@RequestBody codeModel responceBody) {
+    public CustomResponse oauthPOST(@RequestBody codeModel responceBody) {
         Boolean dataUpdated = this.stravaWrapper.setAuthTokens(responceBody);
 
         if (dataUpdated) {

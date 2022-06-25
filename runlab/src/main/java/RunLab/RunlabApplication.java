@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import okhttp3.Response;
 
+import com.google.gson.Gson;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import RunLab.Exceptions.InvalidRequest;
 import RunLab.Models.*;
+import RunLab.Objects.Strava.AthleteProfile;
+import RunLab.Objects.Strava.AthleteStatistics;
 import RunLab.Responces.*;
 import RunLab.Wrappers.*;
 
@@ -24,6 +28,7 @@ import RunLab.Wrappers.*;
 
 public class RunlabApplication {
 
+    Gson gson = new Gson();
     Strava stravaWrapper = new Strava();
     Mapbox mapboxWrapper = new Mapbox("walking");
     // MongoDB dbWrappers = new MongoDB();
@@ -33,29 +38,36 @@ public class RunlabApplication {
         SpringApplication.run(RunlabApplication.class, args);
     }
 
-    @GetMapping("/refresh")
-    public CustomResponse refresh() throws InvalidRequest {
-        // pull in and update data
-        boolean dataUpdated = this.stravaWrapper.pull();
+    // @GetMapping("/refresh")
+    // public CustomResponse<String> refresh() throws InvalidRequest {
+    //     // pull in and update data
+    //     boolean dataUpdated = this.stravaWrapper.pull();
 
-        if (dataUpdated) {
-            return new Success();
-        } else {
-            return new PullFailure();
-        }
-    }
+    //     if (dataUpdated) {
+    //         return new Success();
+    //     } else {
+    //         return new PullFailure();
+    //     }
+    // }
 
     @GetMapping("/getAtheleteProfile")
-    public void getAtheleteProfile() {
-        // TODO: Query to get athelete information.
+    public CustomResponse<AthleteProfile> getAtheleteProfile()  throws InvalidRequest, IOException {
+        Response response = this.stravaWrapper.getAtheleteProfile();
+        Success<AthleteProfile> r = new Success<AthleteProfile>();
+        
+        AthleteProfile profile = gson.fromJson(response.body().string().replace("\"", "'"), AthleteProfile.class);
+        r.setBody(profile);
+        return r;
     }
 
-    @GetMapping(value = { "/getAtheleteStatistics/{atheleteID}" })
-    public Response getAtheleteStatistics(@PathVariable(value = "atheleteID") String atheleteID) throws InvalidRequest, IOException {
-        Response response = this.stravaWrapper.getAtheleteStats(atheleteID);
+    // @GetMapping(value = { "/getAtheleteStatistics/{atheleteID}" })
+    // public CustomResponse<AthleteStatistics> getAtheleteStatistics(@PathVariable(value = "atheleteID") String atheleteID) throws InvalidRequest, IOException {
+    //     Response response = this.stravaWrapper.getAtheleteStats(atheleteID);
 
-        return response;        
-    }
+    //     // return response.body().string();        
+    //     CustomResponse<AthleteStatistics> r = new Success<AthleteStatistics>();
+    //     return r;
+    // }
 
     @GetMapping("/oauth")
     public CustomResponse oauthGET() {

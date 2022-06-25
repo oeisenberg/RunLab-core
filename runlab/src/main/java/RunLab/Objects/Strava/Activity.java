@@ -1,8 +1,12 @@
-package RunLab.Objects;
+package RunLab.Objects.Strava;
 
 import java.util.Map;
 import java.time.ZonedDateTime;
 
+import RunLab.Objects.Coord;
+import RunLab.Objects.Lap;
+import RunLab.Objects.Route;
+import RunLab.Objects.Split;
 import RunLab.Utility.JsonConverter;
 
 /**

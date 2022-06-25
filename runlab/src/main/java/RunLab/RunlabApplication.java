@@ -70,25 +70,25 @@ public class RunlabApplication {
     // }
 
     @GetMapping("/oauth")
-    public CustomResponse oauthGET() {
+    public CustomResponse<String> oauthGET() {
         // pull in and update data
         boolean dataUpdated = this.stravaWrapper.refreshAuthTokens();
 
         if (dataUpdated) {
-            return new Success();
+            return new Success<String>();
         } else {
-            return new PullFailure();
+            return new PullFailure<String>();
         }
     }
 
     @PostMapping("/oauth")
-    public CustomResponse oauthPOST(@RequestBody codeModel responceBody) {
+    public CustomResponse<String> oauthPOST(@RequestBody codeModel responceBody) {
         Boolean dataUpdated = this.stravaWrapper.setAuthTokens(responceBody);
 
         if (dataUpdated) {
-            return new Success();
+            return new Success<String>();
         } else {
-            return new Failure();
+            return new Failure<String>();
         }
     }
 

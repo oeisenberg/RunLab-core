@@ -1,28 +1,29 @@
 package RunLab.Responces;
 
-import java.net.http.HttpResponse;
-
-public abstract class CustomResponse { // implements HttpResponse ?
+public abstract class CustomResponse<T> {
     protected int status = 400;
-
+    protected String header;
     protected String message;
-    protected String body;
+    protected T body;
 
     public int getStatus(){
         return status;
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
 
-    public void ingest(HttpResponse<String> otherResponse){
-        // TODO: copy header values
-        setBody(otherResponse.body().replace("\"", "'"));
+    public T getBody() {
+        return body;
     }
 
-    private void setBody(String body){
-        this.message = body;
+    public void setBody(T body) {
+        this.body = body;
+    }
+
+    public void setMessage(String msg) {
+        this.message = msg;
     }
 
 }

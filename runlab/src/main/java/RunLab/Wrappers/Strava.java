@@ -22,7 +22,8 @@ import com.google.gson.JsonSyntaxException;
 import RunLab.Exceptions.InvalidRequest;
 import RunLab.Models.KeysModel;
 import RunLab.Models.codeModel;
-import RunLab.Objects.Activity;
+import RunLab.Objects.Strava.Activity;
+import RunLab.Objects.Strava.AthleteStatistics;
 import RunLab.Utility.JsonConverter;
 
 
@@ -57,9 +58,14 @@ public class Strava {
         return true;
     }
 
-    public Response getAtheleteStats(String atheleteID) throws InvalidRequest{
-        
+    public Response getAtheleteStats(String atheleteID) throws InvalidRequest { 
         Response response = makeAPIRequest("athletes/" + atheleteID + "/stats");
+        
+        return response;
+    }
+
+    public Response getAtheleteProfile() throws InvalidRequest {
+        Response response = makeAPIRequest("athlete/");
         
         return response;
     }

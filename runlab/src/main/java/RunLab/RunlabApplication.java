@@ -60,14 +60,15 @@ public class RunlabApplication {
         return r;
     }
 
-    // @GetMapping(value = { "/getAtheleteStatistics/{atheleteID}" })
-    // public CustomResponse<AthleteStatistics> getAtheleteStatistics(@PathVariable(value = "atheleteID") String atheleteID) throws InvalidRequest, IOException {
-    //     Response response = this.stravaWrapper.getAtheleteStats(atheleteID);
+    @GetMapping(value = { "/getAtheleteStatistics/{atheleteID}" })
+    public CustomResponse<AthleteStatistics> getAtheleteStatistics(@PathVariable(value = "atheleteID") String atheleteID) throws InvalidRequest, IOException {
+        Response response = this.stravaWrapper.getAtheleteStats(atheleteID);
+        Success<AthleteStatistics> r = new Success<AthleteStatistics>();
 
-    //     // return response.body().string();        
-    //     CustomResponse<AthleteStatistics> r = new Success<AthleteStatistics>();
-    //     return r;
-    // }
+        AthleteStatistics stats = gson.fromJson(response.body().string().replace("\"", "'"), AthleteStatistics.class);
+        r.setBody(stats);
+        return r;
+    }
 
     @GetMapping("/oauth")
     public CustomResponse<String> oauthGET() {

@@ -1,6 +1,6 @@
 package RunLab.Objects.Strava;
 
-public abstract class AthleteStatistics {
+public class AthleteStatistics {
     private float biggest_ride_distance;
     private float biggest_climb_elevation_gain;
     private ActivityTotal recent_ride_totals;

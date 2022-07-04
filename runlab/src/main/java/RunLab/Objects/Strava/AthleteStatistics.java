@@ -33,7 +33,7 @@ public class AthleteStatistics {
         return this.recent_swim_totals;
     }
 
-    public ActivityTotal getRideTotals(){
+    public ActivityTotal getYTDRideTotals(){
         return this.ytd_ride_totals;
     }
 

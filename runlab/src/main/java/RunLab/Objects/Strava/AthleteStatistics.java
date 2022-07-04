@@ -49,7 +49,7 @@ public class AthleteStatistics {
         return this.all_ride_totals;
     }
 
-    public ActivityTotal getAllTunTotals(){
+    public ActivityTotal getAllRunTotals(){
         return this.all_run_totals;
     }
 

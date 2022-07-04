@@ -2,7 +2,7 @@ package RunLab.Objects.Strava;
 
 public class ActivityTotal {
     private int count;
-    private float distnace;
+    private float distance;
     private int moving_time;
     private int elapsed_time;
     private float elevation_gain;
@@ -13,22 +13,22 @@ public class ActivityTotal {
     }
 
     public float getDistance(){
-        return this.distnace;
+        return this.distance;
     }
     
-    public int getMoving_time(){
+    public int getMovingTime(){
         return this.moving_time;
     }
     
-    public int getElapsed_time(){
+    public int getElapsedTime(){
         return this.elapsed_time;
     }
 
-    public float getDistnace(){
+    public float getElevationGain(){
         return this.elevation_gain;
     }
 
-    public int getAchievement_count(){
+    public int getAchievementCount(){
         return this.achievement_count;
     }
 }

@@ -21,7 +21,7 @@ import com.google.gson.JsonSyntaxException;
 import RunLab.Exceptions.InvalidRequest;
 import RunLab.Models.KeysModel;
 import RunLab.Models.codeModel;
-import RunLab.Objects.Strava.Activity;
+import RunLab.Objects.Strava.SummaryActivity;
 import RunLab.Objects.Strava.AthleteStatistics;
 import RunLab.Utility.JsonConverter;
 
@@ -48,7 +48,7 @@ public class Strava {
         // Could look into a builder design pattern for the urls with optional parameters
         // int before, int after, int page, int perPage
         // https://stackoverflow.com/questions/222214/managing-constructors-with-many-parameters-in-java/222295#222295
-        Response response = makeAPIRequest("athlete/activities");
+        Response response = makeAPIRequest("athlete/activities?page=1&per_page=10");
         
         return response;
     }

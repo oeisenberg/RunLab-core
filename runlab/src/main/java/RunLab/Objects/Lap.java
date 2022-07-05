@@ -6,7 +6,7 @@ import java.util.Map;
 import RunLab.Utility.JsonConverter;
 
 public class Lap {
-    private BigInteger id;
+    private Long id;
     private String name;
     private float distance;
     private float elapsed_time;

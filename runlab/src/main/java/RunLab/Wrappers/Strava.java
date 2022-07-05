@@ -6,8 +6,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.util.Map;
@@ -89,9 +91,12 @@ public class Strava {
         return makeRequest(request);
     }
 
+    private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
+    
     private Response makeOauthRequest(String uri) throws InvalidRequest {
         Request request = new Request.Builder()
-            .post(null)
+            .post(RequestBody.create("", MEDIA_TYPE_MARKDOWN))
+            .header("Content-Length", "0")
             .url(this.url + "oauth/" + uri)
             .build();
 
@@ -142,8 +147,8 @@ public class Strava {
         return true;
     }
 
-    public boolean setAuthTokens(codeModel responce){
-        this.access_code = responce.getCode();
+    public boolean setAuthTokens(codeModel requestBody){
+        this.access_code = requestBody.getCode();
 
         if (readKeys()){
             try {

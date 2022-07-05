@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import RunLab.Exceptions.InvalidRequest;
 import RunLab.Models.*;
-import RunLab.Objects.Strava.Activity;
+import RunLab.Objects.Strava.SummaryActivity;
 import RunLab.Objects.Strava.AthleteProfile;
 import RunLab.Objects.Strava.AthleteStatistics;
 import RunLab.Responces.*;
@@ -41,11 +41,13 @@ public class RunlabApplication {
     }
 
     @GetMapping("/refresh")
-    public CustomResponse<ArrayList<Activity>> refresh() throws InvalidRequest, IOException {
+    public CustomResponse<SummaryActivity[]> refresh() throws InvalidRequest, IOException {
         Response response = this.stravaWrapper.pull();
-        Activity activity = gson.fromJson(response.body().string().replace("\"", "'"), Activity.class);
-
-        return new Success<>();
+        Success<SummaryActivity[]> r = new Success<SummaryActivity[]>();
+        SummaryActivity[] activity = gson.fromJson(response.body().string().replace("\"", "'"), SummaryActivity[].class);
+        
+        r.setBody(activity);
+        return r;
     }
 
     @GetMapping("/getAtheleteProfile")

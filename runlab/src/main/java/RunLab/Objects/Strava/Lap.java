@@ -13,5 +13,43 @@ public class Lap {
     private float average_heartrate;
     private float pace_zone;
 
+    public Long getID() {
+        return this.id;
+    }
+
+    public String getName() {
+        return name;
+    }
     
+    public float getDistance(){
+        return this.distance;
+    }
+
+    public float getElapsedTime(){
+        return this.elapsed_time;
+    }
+
+    public float getSplit(){
+        return this.split;
+    }
+
+    public float getMaxSpeed(){
+        return this.max_speed;
+    }
+
+    public float getAverageSpeed(){
+        return this.average_speed;
+    }
+
+    public float getMaxHeartrate(){
+        return this.max_heartrate;
+    }
+
+    public float getAverageHeartrate(){
+        return this.average_heartrate;
+    }
+
+    public float getPaceZone(){
+        return this.pace_zone;
+    }
 }

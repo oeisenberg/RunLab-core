@@ -28,3 +28,4 @@ pom.xml
 RunLab Dashboard.keys
 keys.json
 mongo.json
+mapbox.json

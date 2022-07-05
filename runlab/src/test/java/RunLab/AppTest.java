@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import com.google.gson.Gson;
 
 import RunLab.Models.codeModel;
+import RunLab.Objects.Strava.SummaryActivity;
 import RunLab.Objects.Strava.AthleteStatistics;
 import RunLab.Responces.*;
 import RunLab.Wrappers.MongoDB;
@@ -111,6 +112,23 @@ public class AppTest {
             
         } catch (Exception e) {
             assertTrue( false );
+        }
+    }
+
+    @Test
+    public void testPullEndPoint() throws Exception{
+        try {
+            Response response = this.stravaWrapper.pull();
+            Success<SummaryActivity[]> r = new Success<SummaryActivity[]>();
+
+            SummaryActivity[] activity = gson.fromJson(response.body().string().replace("\"", "'"), SummaryActivity[].class);
+            r.setBody(activity);
+
+            System.out.println(r);
+            
+        } catch (Exception e) {
+            throw e;
+            // assertTrue( false );
         }
     }
 }

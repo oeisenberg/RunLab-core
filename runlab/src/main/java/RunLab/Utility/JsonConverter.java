@@ -5,13 +5,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.math.BigInteger;
-import java.time.ZonedDateTime;
 
-import RunLab.Objects.Route;
-import RunLab.Objects.Split;
-import RunLab.Objects.Coord;
-import RunLab.Objects.Lap;
-import RunLab.Objects.Polyline;
+import RunLab.Objects.Strava.Lap;
+import RunLab.Objects.Strava.Route;
+import RunLab.Objects.Strava.Split;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
@@ -63,7 +60,7 @@ public class JsonConverter {
         Split[] splits = new Split[jsonArray.size()];
         for(int iSplit = 0; iSplit < jsonArray.size(); iSplit++ ){
             Map<String, Object> newMap = JsonConverter.toMap((JsonObject) jsonArray.get(iSplit));
-            splits[iSplit] = new Split(newMap);
+            splits[iSplit] = new Split();
         }
         return splits;
     }
@@ -73,32 +70,17 @@ public class JsonConverter {
         Lap[] laps = new Lap[jsonArray.size()];
         for(int iLap = 0; iLap < jsonArray.size(); iLap++ ){
             Map<String, Object> newMap = JsonConverter.toMap((JsonObject) jsonArray.get(iLap));
-            laps[iLap] = new Lap(newMap);
+            // laps[iLap] = new Lap(newMap);
         }
         return laps;
-    }
-
-    public static Coord toCoord(Map<String, Object> attributes, String param){
-        String s = attributes.get(param).toString();
-        s = s.substring(1, s.length()-1);
-        String[] s_arr = s.split(",");
-        Float x = Float.parseFloat(s_arr[0]);
-        Float y = Float.parseFloat(s_arr[1]);
-        return new Coord(x, y);
-    }
-
-    public static ZonedDateTime toDateTime(Map<String, Object> attributes, String param){
-        String s = JsonConverter.toString(attributes, param);
-        ZonedDateTime DateTime = ZonedDateTime.parse(s);
-        return DateTime;
     }
 
     public static Route toRoute(Map<String, Object> attributes, String param){
         JsonObject jsonObject = (JsonObject) attributes.get(param);
         Map<String, Object> newMap = JsonConverter.toMap(jsonObject);
         
-        Polyline s = new Polyline(JsonConverter.toString(newMap, "polyline"));
-        Polyline d = new Polyline(JsonConverter.toString(newMap, "summary_polyline"));
-        return new Route(s, d);
+        // Polyline s = new Polyline(JsonConverter.toString(newMap, "polyline"));
+        // Polyline d = new Polyline(JsonConverter.toString(newMap, "summary_polyline"));
+        return new Route();
     }
 }

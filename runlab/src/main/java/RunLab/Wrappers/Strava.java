@@ -43,8 +43,12 @@ public class Strava {
 
     }
 
-    public Response pull(int before, int after, int page, int perPage) throws InvalidRequest {
-        Response response = makeAPIRequest("athlete/activities" + "");
+    // Gets the last 30 activites
+    public Response pull() throws InvalidRequest {
+        // Could look into a builder design pattern for the urls with optional parameters
+        // int before, int after, int page, int perPage
+        // https://stackoverflow.com/questions/222214/managing-constructors-with-many-parameters-in-java/222295#222295
+        Response response = makeAPIRequest("athlete/activities");
         
         return response;
     }

@@ -1,6 +1,7 @@
 package RunLab;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Response;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import RunLab.Exceptions.InvalidRequest;
 import RunLab.Models.*;
+import RunLab.Objects.Strava.Activity;
 import RunLab.Objects.Strava.AthleteProfile;
 import RunLab.Objects.Strava.AthleteStatistics;
 import RunLab.Responces.*;
@@ -38,17 +40,13 @@ public class RunlabApplication {
         SpringApplication.run(RunlabApplication.class, args);
     }
 
-    // @GetMapping("/refresh")
-    // public CustomResponse<String> refresh() throws InvalidRequest {
-    //     // pull in and update data
-    //     boolean dataUpdated = this.stravaWrapper.pull();
+    @GetMapping("/refresh")
+    public CustomResponse<ArrayList<Activity>> refresh() throws InvalidRequest, IOException {
+        Response response = this.stravaWrapper.pull();
+        Activity activity = gson.fromJson(response.body().string().replace("\"", "'"), Activity.class);
 
-    //     if (dataUpdated) {
-    //         return new Success();
-    //     } else {
-    //         return new PullFailure();
-    //     }
-    // }
+        return new Success<>();
+    }
 
     @GetMapping("/getAtheleteProfile")
     public CustomResponse<AthleteProfile> getAtheleteProfile()  throws InvalidRequest, IOException {

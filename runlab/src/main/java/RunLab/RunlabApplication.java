@@ -73,18 +73,18 @@ public class RunlabApplication {
     @GetMapping("/oauth")
     public CustomResponse<String> oauthGET() {
         // pull in and update data
-        boolean dataUpdated = this.stravaWrapper.refreshAuthTokens();
+        boolean isAuthenticated = this.stravaWrapper.refreshAuthTokens();
 
-        if (dataUpdated) {
+        if (isAuthenticated) {
             return new Success<String>();
         } else {
-            return new PullFailure<String>();
+            return new Failure<String>();
         }
     }
 
     @PostMapping("/oauth")
-    public CustomResponse<String> oauthPOST(@RequestBody codeModel responceBody) {
-        Boolean dataUpdated = this.stravaWrapper.setAuthTokens(responceBody);
+    public CustomResponse<String> oauthPOST(@RequestBody codeModel requestBody) {
+        Boolean dataUpdated = this.stravaWrapper.setAuthTokens(requestBody);
 
         if (dataUpdated) {
             return new Success<String>();

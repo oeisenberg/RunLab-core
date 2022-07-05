@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.BufferedReader;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -44,18 +43,10 @@ public class Strava {
 
     }
 
-    // get most recent and pull all activities from that to today
-    // if fails due to no new data dataUpdated <- false
-    public boolean pull() {
-        String rawActivity = mockActivityStavaAPIRequest();
-
-        // JsonObject jsonObject = (JsonObject) JsonParser.parseString(rawActivity);
-        // Map<String, Object> attributes = JsonConverter.toMap(jsonObject);
-
-        // Activity activity = new Activity(attributes);
-        // save activity
-
-        return true;
+    public Response pull(int before, int after, int page, int perPage) throws InvalidRequest {
+        Response response = makeAPIRequest("athlete/activities" + "");
+        
+        return response;
     }
 
     public Response getAtheleteStats(String atheleteID) throws InvalidRequest { 
@@ -68,25 +59,6 @@ public class Strava {
         Response response = makeAPIRequest("athlete/");
         
         return response;
-    }
-
-    /*
-     * Mock function to imitate the Strava REST API call For now, reads the responce
-     * - presaved as a string.
-     */
-    private String mockActivityStavaAPIRequest() {
-        File file = new File("W:\\Dropbox\\Programming\\RunLab\\backend\\data\\asTxt\\GetActivity.txt");
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-
-            String data;
-            data = br.readLine();
-            br.close();
-            return data;
-        } catch (Exception e) {
-            return "";
-        }
     }
 
     private Response makeAPIRequest(String uri) throws InvalidRequest {

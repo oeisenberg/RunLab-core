@@ -12,6 +12,8 @@ import RunLab.Objects.Strava.*;
 import RunLab.Responces.*;
 import RunLab.Wrappers.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,13 +27,15 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 public class StravaController {
 
-    Gson gson = new Gson();
-    Strava stravaWrapper = new Strava();
+    private Gson gson = new Gson();
+    private Strava stravaWrapper = new Strava();
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     StravaController() {}
 
     @GetMapping("/refresh")
     public CustomResponse<SummaryActivity[]> refresh() throws InvalidRequest, IOException {
+        logger.info("Refresh Called");
         Response response = this.stravaWrapper.pull();
         Success<SummaryActivity[]> r = new Success<SummaryActivity[]>();
         SummaryActivity[] activity = gson.fromJson(response.body().string().replace("\"", "'"), SummaryActivity[].class);
@@ -40,9 +44,10 @@ public class StravaController {
         return r;
     }
 
-    @GetMapping("/getAtheleteProfile")
-    public CustomResponse<AthleteProfile> getAtheleteProfile()  throws InvalidRequest, IOException {
-        Response response = this.stravaWrapper.getAtheleteProfile();
+    @GetMapping("/getAthleteProfile")
+    public CustomResponse<AthleteProfile> getAthleteProfile()  throws InvalidRequest, IOException {
+        logger.info("Athlete profile Called");
+        Response response = this.stravaWrapper.getAthleteProfile();
         Success<AthleteProfile> r = new Success<AthleteProfile>();
         
         AthleteProfile profile = gson.fromJson(response.body().string().replace("\"", "'"), AthleteProfile.class);
@@ -50,9 +55,10 @@ public class StravaController {
         return r;
     }
 
-    @GetMapping(value = { "/getAtheleteStatistics/{atheleteID}" })
-    public CustomResponse<AthleteStatistics> getAtheleteStatistics(@PathVariable(value = "atheleteID") String atheleteID) throws InvalidRequest, IOException {
-        Response response = this.stravaWrapper.getAtheleteStats(atheleteID);
+    @GetMapping(value = { "/getAthleteStatistics/{AthleteID}" })
+    public CustomResponse<AthleteStatistics> getAthleteStatistics(@PathVariable(value = "AthleteID") String AthleteID) throws InvalidRequest, IOException {
+        logger.info("Athlete Statistics Called");
+        Response response = this.stravaWrapper.getAthleteStats(AthleteID);
         Success<AthleteStatistics> r = new Success<AthleteStatistics>();
 
         AthleteStatistics stats = gson.fromJson(response.body().string().replace("\"", "'"), AthleteStatistics.class);
@@ -62,6 +68,7 @@ public class StravaController {
 
     @GetMapping("/oauth")
     public CustomResponse<String> oauthGET() {
+        logger.info("Check if Authenticated");
         // pull in and update data
         boolean isAuthenticated = this.stravaWrapper.refreshAuthTokens();
 
@@ -74,6 +81,7 @@ public class StravaController {
 
     @PostMapping("/oauth")
     public CustomResponse<String> oauthPOST(@RequestBody codeModel requestBody) {
+        logger.info("Authentication Called");
         Boolean dataUpdated = this.stravaWrapper.setAuthTokens(requestBody);
 
         if (dataUpdated) {

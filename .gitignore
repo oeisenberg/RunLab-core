@@ -26,3 +26,6 @@ pom.xml
 
 # Ignore keys
 RunLab Dashboard.keys
+keys.json
+mongo.json
+mapbox.json

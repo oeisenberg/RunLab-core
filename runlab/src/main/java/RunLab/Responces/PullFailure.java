@@ -1,6 +1,6 @@
 package RunLab.Responces;
 
-public class PullFailure extends Failure{
+public class PullFailure<T> extends Failure<T> {
 
     public PullFailure(){
         this.status = 421; // Misdirected Request, server not able to produce a response

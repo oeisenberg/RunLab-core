@@ -18,11 +18,10 @@ public class InvalidRequestResponse {
     @ResponseBody
     @ExceptionHandler(InvalidRequest.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    Failure<String> invalidRequestHandler(InvalidRequest ex) {
-        Failure<String> f = new Failure<String>();
-        String msg = ex.getMessage();
-        logger.error(msg);
-        f.setBody(msg);
+    Failure<Throwable> invalidRequestHandler(InvalidRequest ex) {
+        Failure<Throwable> f = new Failure<Throwable>();
+        logger.error(ex.getMessage() + " due to " + ex.getCause());
+        f.setBody(ex.getCause());
         return f;
     }
 }

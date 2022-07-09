@@ -104,7 +104,7 @@ public class AppTest {
     @Test
     public void testAthleteStatisticsEndPoint(){
         try {
-            Response response = this.stravaWrapper.getAtheleteStats("16443776");
+            Response response = this.stravaWrapper.getAthleteStats("16443776");
             Success<AthleteStatistics> r = new Success<AthleteStatistics>();
 
             AthleteStatistics stats = gson.fromJson(response.body().string().replace("\"", "'"), AthleteStatistics.class);

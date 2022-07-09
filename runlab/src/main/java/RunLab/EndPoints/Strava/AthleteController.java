@@ -31,28 +31,37 @@ public class AthleteController {
     private Strava stravaWrapper;
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    AthleteController() {}
+    AthleteController() {
+    }
 
     @GetMapping("/profile")
-    public CustomResponse<AthleteProfile> getAthleteProfile()  throws InvalidRequest, IOException {
+    public CustomResponse<AthleteProfile> getAthleteProfile() throws InvalidRequest, IOException {
         logger.info("Athlete profile Called");
         Response response = this.stravaWrapper.getAthleteProfile();
-        Success<AthleteProfile> r = new Success<AthleteProfile>();
-        
-        AthleteProfile profile = gson.fromJson(response.body().string().replace("\"", "'"), AthleteProfile.class);
-        r.setBody(profile);
-        return r;
+        if (response.isSuccessful()) {
+            Success<AthleteProfile> r = new Success<AthleteProfile>();
+            AthleteProfile profile = gson.fromJson(response.body().string().replace("\"", "'"),AthleteProfile.class);
+            r.setBody(profile);
+            return r;
+        } else {
+            throw new InvalidRequest(response.message());
+        }
     }
 
     @GetMapping(value = { "/statistics" })
-    public CustomResponse<AthleteStatistics> getAthleteStatistics(@RequestParam(value = "ID", defaultValue="16443776") String ID) throws InvalidRequest, IOException {
+    public CustomResponse<AthleteStatistics> getAthleteStatistics(
+            @RequestParam(value = "ID", defaultValue = "16443776") String ID) throws InvalidRequest, IOException {
         logger.info("Athlete Statistics Called");
         Response response = this.stravaWrapper.getAthleteStats(ID);
-        Success<AthleteStatistics> r = new Success<AthleteStatistics>();
-
-        AthleteStatistics stats = gson.fromJson(response.body().string().replace("\"", "'"), AthleteStatistics.class);
-        r.setBody(stats);
-        return r;
+        if (response.isSuccessful()) {
+            Success<AthleteStatistics> r = new Success<AthleteStatistics>();
+            AthleteStatistics stats = gson.fromJson(response.body().string().replace("\"", "'"),
+                    AthleteStatistics.class);
+            r.setBody(stats);
+            return r;
+        } else {
+            throw new InvalidRequest(response.message());
+        }
     }
 
     @GetMapping("/activities")
@@ -61,13 +70,14 @@ public class AthleteController {
         Response response = this.stravaWrapper.pull();
         if (response.isSuccessful()) {
             Success<SummaryActivity[]> r = new Success<SummaryActivity[]>();
-            SummaryActivity[] activity = gson.fromJson(response.body().string().replace("\"", "'"), SummaryActivity[].class);
+            SummaryActivity[] activity = gson.fromJson(response.body().string().replace("\"", "'"),
+                    SummaryActivity[].class);
             r.setBody(activity);
             return r;
         } else {
             throw new InvalidRequest(response.message());
         }
-        
+
     }
 
 }

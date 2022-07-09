@@ -55,15 +55,19 @@ public class AthleteController {
         return r;
     }
 
-    @GetMapping("/activies")
+    @GetMapping("/activities")
     public CustomResponse<SummaryActivity[]> refresh() throws InvalidRequest, IOException {
         logger.info("Refresh Called");
         Response response = this.stravaWrapper.pull();
-        Success<SummaryActivity[]> r = new Success<SummaryActivity[]>();
-        SummaryActivity[] activity = gson.fromJson(response.body().string().replace("\"", "'"), SummaryActivity[].class);
+        if (response.isSuccessful()) {
+            Success<SummaryActivity[]> r = new Success<SummaryActivity[]>();
+            SummaryActivity[] activity = gson.fromJson(response.body().string().replace("\"", "'"), SummaryActivity[].class);
+            r.setBody(activity);
+            return r;
+        } else {
+            throw new InvalidRequest(response.message());
+        }
         
-        r.setBody(activity);
-        return r;
     }
 
 }

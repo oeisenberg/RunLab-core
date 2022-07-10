@@ -15,7 +15,7 @@ public class RunlabApplication {
     }
 
     public static void main(String[] args) {
-        // System.setProperty("server.servlet.context-path", "/RunLab");
+        System.setProperty("server.servlet.context-path", "/runlab-api");
         SpringApplication.run(RunlabApplication.class, args);
     }
 

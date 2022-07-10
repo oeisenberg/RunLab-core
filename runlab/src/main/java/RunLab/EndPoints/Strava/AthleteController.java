@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/strava-api/v1/athlete")
+@RequestMapping("/v1/athlete")
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 public class AthleteController {
 

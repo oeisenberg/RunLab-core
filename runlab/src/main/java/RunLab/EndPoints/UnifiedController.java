@@ -15,7 +15,7 @@ import RunLab.Responces.*;
 import RunLab.Wrappers.*;
 
 @RestController
-@RequestMapping("/runlab/v1")
+@RequestMapping("/v1")
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 public class UnifiedController {
     

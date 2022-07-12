@@ -55,13 +55,13 @@ public class Strava {
         return response;
     }
 
-    public Response getAtheleteStats(String atheleteID) throws InvalidRequest { 
-        Response response = makeAPIRequest("athletes/" + atheleteID + "/stats");
+    public Response getAthleteStats(String AthleteID) throws InvalidRequest { 
+        Response response = makeAPIRequest("athletes/" + AthleteID + "/stats");
         
         return response;
     }
 
-    public Response getAtheleteProfile() throws InvalidRequest {
+    public Response getAthleteProfile() throws InvalidRequest {
         Response response = makeAPIRequest("athlete/");
         
         return response;

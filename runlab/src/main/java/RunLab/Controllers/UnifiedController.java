@@ -1,4 +1,4 @@
-package RunLab.EndPoints;
+package RunLab.Controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import RunLab.Models.*;
-import RunLab.Responces.*;
+import RunLab.Models.Responces.*;
 import RunLab.Wrappers.*;
 
 @RestController

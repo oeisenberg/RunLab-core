@@ -1,4 +1,4 @@
-package RunLab.Responces;
+package RunLab.Models.Responces;
 
 public abstract class CustomResponse<T> {
     protected int status = 400;

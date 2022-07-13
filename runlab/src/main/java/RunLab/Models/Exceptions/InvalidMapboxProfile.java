@@ -1,4 +1,4 @@
-package RunLab.Exceptions;
+package RunLab.Models.Exceptions;
 
 public class InvalidMapboxProfile extends Exception {
 

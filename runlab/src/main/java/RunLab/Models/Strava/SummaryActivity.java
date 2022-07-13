@@ -1,4 +1,4 @@
-package RunLab.Objects.Strava;
+package RunLab.Models.Strava;
 
 // Parameters used for Gson JSON serialisation.
 @SuppressWarnings("unused")

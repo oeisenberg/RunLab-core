@@ -1,4 +1,4 @@
-package RunLab.Responces;
+package RunLab.Models.Responces;
 
 public class Success<T> extends CustomResponse<T> {
 

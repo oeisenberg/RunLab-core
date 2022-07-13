@@ -1,11 +1,12 @@
-package RunLab.Responces;
+package RunLab.Models.Responces;
 
-import RunLab.Exceptions.InvalidRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import RunLab.Models.Exceptions.InvalidRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

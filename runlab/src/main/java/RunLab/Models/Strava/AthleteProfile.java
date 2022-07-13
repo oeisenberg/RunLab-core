@@ -1,4 +1,4 @@
-package RunLab.Objects.Strava;
+package RunLab.Models.Strava;
 
 public class AthleteProfile {
     private int id;

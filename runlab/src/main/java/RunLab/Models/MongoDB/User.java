@@ -1,4 +1,4 @@
-package RunLab.Objects.RunLab;
+package RunLab.Models.MongoDB;
 
 import org.springframework.data.annotation.Id;
 

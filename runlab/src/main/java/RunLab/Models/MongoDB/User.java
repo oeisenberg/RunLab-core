@@ -2,11 +2,14 @@ package RunLab.Models.MongoDB;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
 public class User extends mongodbDocument {
+    @Id
+    public String id; 
     @Indexed(unique=true, background = true)
     public String userName;
     private String password;

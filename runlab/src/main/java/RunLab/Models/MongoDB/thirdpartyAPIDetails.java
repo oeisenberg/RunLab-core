@@ -1,7 +1,11 @@
 package RunLab.Models.MongoDB;
 
 public class thirdpartyAPIDetails extends mongodbDocument {
-    private String name;
+    public String name;
+    public String tokenType;
+    public long expiresAt;
+    public long expiresIn;
+
     private String authenticationCode;
     private String refreshCode;
 }

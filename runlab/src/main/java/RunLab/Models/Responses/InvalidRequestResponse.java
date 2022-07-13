@@ -1,4 +1,4 @@
-package RunLab.Models.Responces;
+package RunLab.Models.Responses;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,8 +21,8 @@ public class InvalidRequestResponse {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Failure<Throwable> invalidRequestHandler(InvalidRequest ex) {
         Failure<Throwable> f = new Failure<Throwable>();
-        logger.error(ex.getMessage() + " due to " + ex.getCause());
-        f.setBody(ex.getCause());
+        logger.error(ex.getMessage());
+        f.setMessage(ex.getMessage());
         return f;
     }
 }

@@ -7,7 +7,7 @@ import okhttp3.Response;
 import com.google.gson.Gson;
 
 import RunLab.Models.Exceptions.InvalidRequest;
-import RunLab.Models.Responces.*;
+import RunLab.Models.Responses.*;
 import RunLab.Models.Strava.*;
 import RunLab.Wrappers.*;
 

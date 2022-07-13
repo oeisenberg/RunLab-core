@@ -1,4 +1,4 @@
-package RunLab.Models.Responces;
+package RunLab.Models.Responses;
 
 public class PullFailure<T> extends Failure<T> {
 

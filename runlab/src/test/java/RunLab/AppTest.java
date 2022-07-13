@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import com.google.gson.Gson;
 
 import RunLab.Models.codeModel;
-import RunLab.Objects.Strava.SummaryActivity;
-import RunLab.Objects.Strava.AthleteStatistics;
-import RunLab.Responces.*;
+import RunLab.Models.Responces.*;
+import RunLab.Models.Strava.AthleteStatistics;
+import RunLab.Models.Strava.SummaryActivity;
 import RunLab.Wrappers.Strava;
 
 /**

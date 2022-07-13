@@ -20,11 +20,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import RunLab.Exceptions.InvalidRequest;
 import RunLab.Models.KeysModel;
 import RunLab.Models.codeModel;
-import RunLab.Objects.Strava.SummaryActivity;
-import RunLab.Objects.Strava.AthleteStatistics;
+import RunLab.Models.Exceptions.InvalidRequest;
+import RunLab.Models.Strava.AthleteStatistics;
+import RunLab.Models.Strava.SummaryActivity;
 import RunLab.Utility.JsonConverter;
 
 

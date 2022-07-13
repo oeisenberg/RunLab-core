@@ -6,11 +6,12 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.math.BigInteger;
 
-import RunLab.Objects.Strava.Lap;
-import RunLab.Objects.Strava.Route;
-import RunLab.Objects.Strava.Split;
-
 import com.google.gson.JsonObject;
+
+import RunLab.Models.Strava.Lap;
+import RunLab.Models.Strava.Route;
+import RunLab.Models.Strava.Split;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 

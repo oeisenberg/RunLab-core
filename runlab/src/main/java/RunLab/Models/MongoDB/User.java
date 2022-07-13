@@ -1,21 +1,27 @@
 package RunLab.Models.MongoDB;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
+@Document(collection = "user")
 public class User {
     @Id
-    public String id; 
-
+    private String id; 
+    @Indexed(unique=true, background = true)
     public String userName;
-    public String pwd;
+    private String password;
     public String firstName;
     public String lastName;
+    public LocalDateTime createdDateTime = LocalDateTime.now();
 
     public User() {}
 
     public User(String userName, String pwd, String firstName, String lastName) {
         this.userName = userName;
-        this.pwd = pwd;
+        this.password = pwd;
         this.firstName = firstName;
         this.lastName = lastName;
     }

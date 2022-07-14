@@ -13,13 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import RunLab.Repositories.UserRepository;
-import RunLab.Utility.jwtTokenUtil;
+import RunLab.repositories.UserRepository;
+import RunLab.utility.jwtTokenUtil;
 import RunLab.models.LoginUser;
 import RunLab.models.RegisteringUser;
-import RunLab.models.MongoDB.User;
-import RunLab.models.Responses.CustomResponse;
-import RunLab.models.Responses.Success;
+import RunLab.models.mongoDB.User;
+import RunLab.models.responses.CustomResponse;
+import RunLab.models.responses.Success;
 
 @RestController
 @RequestMapping("/v1/token")

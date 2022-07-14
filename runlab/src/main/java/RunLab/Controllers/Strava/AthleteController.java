@@ -6,9 +6,9 @@ import okhttp3.Response;
 
 import com.google.gson.Gson;
 
-import RunLab.models.Exceptions.InvalidRequest;
-import RunLab.models.Responses.*;
-import RunLab.models.Strava.*;
+import RunLab.models.exceptions.InvalidRequest;
+import RunLab.models.responses.*;
+import RunLab.models.strava.*;
 import RunLab.wrappers.*;
 
 import org.slf4j.Logger;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import RunLab.models.codeModel;
-import RunLab.models.Responses.*;
+import RunLab.models.responses.*;
 import RunLab.wrappers.*;
 
 @RestController

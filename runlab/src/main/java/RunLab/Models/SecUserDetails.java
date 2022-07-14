@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import RunLab.models.MongoDB.User;
+import RunLab.models.mongoDB.User;
 
 public class SecUserDetails implements UserDetails {
     private User user;

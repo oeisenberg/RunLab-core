@@ -39,6 +39,14 @@ public class User extends mongodbDocument {
         return this.userName;
     }
 
+    public String getFirstName(){
+        return this.firstName;
+    }
+
+    public String getLastName(){
+        return this.lastName;
+    }
+
     public void setUserName(String username){
         this.userName = username;
     }

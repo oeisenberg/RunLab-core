@@ -9,13 +9,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user")
 public class User extends mongodbDocument {
     @Id
-    protected String id; 
+    private String id; 
     @Indexed(unique=true, background = true)
-    protected String userName;
+    private String userName;
     private String password;
-    protected String firstName;
-    protected String lastName;
-    protected List<thirdpartyAPIDetails> apiDetails;
+    private String firstName;
+    private String lastName;
+    private List<thirdpartyAPIDetails> apiDetails;
+
+    private boolean isEnabled = true;
+    private boolean isAccountNonExpired = true;
+    private boolean isAccountNonLocked = true;
+    private boolean isCredentialsNonExpired = true;
+    // private boolean isEnabled = true;
 
     public User() {}
 
@@ -45,6 +51,26 @@ public class User extends mongodbDocument {
 
     public String getLastName(){
         return this.lastName;
+    }
+
+    public String getPassword(){
+        return this.password;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
     }
 
     public void setUserName(String username){

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import RunLab.Models.*;
-import RunLab.Models.Responces.*;
+import RunLab.Models.codeModel;
+import RunLab.Models.Responses.*;
 import RunLab.Wrappers.*;
 
 @RestController

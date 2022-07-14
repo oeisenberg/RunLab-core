@@ -1,4 +1,4 @@
-package RunLab.Models.Strava;
+package RunLab.models.strava;
 
 public class AthleteStatistics {
     private float biggest_ride_distance;

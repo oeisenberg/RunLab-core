@@ -1,4 +1,4 @@
-package RunLab.Models.MongoDB;
+package RunLab.models.mongoDB;
 
 import java.time.LocalDateTime;
 

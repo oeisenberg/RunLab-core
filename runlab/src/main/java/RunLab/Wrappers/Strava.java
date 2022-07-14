@@ -1,4 +1,4 @@
-package RunLab.Wrappers;
+package RunLab.wrappers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,12 +20,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import RunLab.Models.KeysModel;
-import RunLab.Models.codeModel;
-import RunLab.Models.Exceptions.InvalidRequest;
-import RunLab.Models.Strava.AthleteStatistics;
-import RunLab.Models.Strava.SummaryActivity;
-import RunLab.Utility.JsonConverter;
+import RunLab.models.KeysModel;
+import RunLab.models.codeModel;
+import RunLab.models.exceptions.InvalidRequest;
+import RunLab.models.strava.AthleteStatistics;
+import RunLab.models.strava.SummaryActivity;
+import RunLab.utility.JsonConverter;
 
 
 // import io.micrometer.core.instrument.config.validate.Validated.Invalid;

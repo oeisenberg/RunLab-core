@@ -1,4 +1,4 @@
-package RunLab.Models.Responses;
+package RunLab.models.responses;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

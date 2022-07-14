@@ -1,4 +1,4 @@
-package RunLab.Controllers;
+package RunLab.controllers;
 
 import javax.naming.AuthenticationException;
 
@@ -13,13 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import RunLab.Models.LoginUser;
-import RunLab.Models.RegisteringUser;
-import RunLab.Models.MongoDB.User;
-import RunLab.Models.Responses.CustomResponse;
-import RunLab.Models.Responses.Success;
 import RunLab.Repositories.UserRepository;
 import RunLab.Utility.jwtTokenUtil;
+import RunLab.models.LoginUser;
+import RunLab.models.RegisteringUser;
+import RunLab.models.MongoDB.User;
+import RunLab.models.Responses.CustomResponse;
+import RunLab.models.Responses.Success;
 
 @RestController
 @RequestMapping("/v1/token")

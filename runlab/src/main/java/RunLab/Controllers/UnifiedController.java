@@ -1,4 +1,4 @@
-package RunLab.Controllers;
+package RunLab.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import RunLab.Models.codeModel;
-import RunLab.Models.Responses.*;
-import RunLab.Wrappers.*;
+import RunLab.models.codeModel;
+import RunLab.models.Responses.*;
+import RunLab.wrappers.*;
 
 @RestController
 @RequestMapping("/v1")

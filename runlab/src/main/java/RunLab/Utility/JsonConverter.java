@@ -1,4 +1,4 @@
-package RunLab.Utility;
+package RunLab.utility;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,9 +8,9 @@ import java.math.BigInteger;
 
 import com.google.gson.JsonObject;
 
-import RunLab.Models.Strava.Lap;
-import RunLab.Models.Strava.Route;
-import RunLab.Models.Strava.Split;
+import RunLab.models.strava.Lap;
+import RunLab.models.strava.Route;
+import RunLab.models.strava.Split;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

@@ -1,4 +1,4 @@
-package RunLab.Models.MongoDB;
+package RunLab.models.mongoDB;
 
 public class thirdpartyAPIDetails extends mongodbDocument {
     public String name;

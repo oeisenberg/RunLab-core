@@ -1,6 +1,6 @@
-package RunLab.Wrappers;
+package RunLab.wrappers;
 
-import RunLab.Models.Exceptions.InvalidMapboxProfile;
+import RunLab.models.exceptions.InvalidMapboxProfile;
 
 // import com.mapbox.api.matching.v5.MapboxMapMatching;
 

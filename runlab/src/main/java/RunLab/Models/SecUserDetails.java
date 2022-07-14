@@ -1,11 +1,11 @@
-package RunLab.Models;
+package RunLab.models;
 
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import RunLab.Models.MongoDB.User;
+import RunLab.models.MongoDB.User;
 
 public class SecUserDetails implements UserDetails {
     private User user;

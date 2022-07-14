@@ -1,15 +1,15 @@
-package RunLab.Utility;
+package RunLab.utility;
 
 import com.google.gson.Gson;
+
+import RunLab.models.JWTPayload;
+import RunLab.models.mongoDB.User;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
 import org.springframework.stereotype.Component;
-
-import RunLab.Models.JWTPayload;
-import RunLab.Models.MongoDB.User;
 
 @Component
 public class jwtTokenUtil {

@@ -1,4 +1,4 @@
-package RunLab.Models.Exceptions;
+package RunLab.models.exceptions;
 
 public class InvalidRequest extends Exception {
     // Serialisable class requires an id 

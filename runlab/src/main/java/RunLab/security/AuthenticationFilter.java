@@ -15,10 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import RunLab.Models.JWTPayload;
-import RunLab.Models.MongoDB.User;
-import RunLab.Repositories.UserRepository;
-import RunLab.Utility.jwtTokenUtil;
+import RunLab.models.JWTPayload;
+import RunLab.models.mongoDB.User;
+import RunLab.repositories.UserRepository;
+import RunLab.utility.jwtTokenUtil;
 
 public class AuthenticationFilter extends OncePerRequestFilter {
     @Autowired

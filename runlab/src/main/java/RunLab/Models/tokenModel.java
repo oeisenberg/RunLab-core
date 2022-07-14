@@ -1,4 +1,4 @@
-package RunLab.Models;
+package RunLab.models;
 
 public class tokenModel {
     private String accessToken;

@@ -1,4 +1,4 @@
-package RunLab.Models.Responses;
+package RunLab.models.responses;
 
 public class Failure<T> extends CustomResponse<T> {
 

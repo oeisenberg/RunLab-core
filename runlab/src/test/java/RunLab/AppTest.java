@@ -13,7 +13,7 @@ import RunLab.Models.codeModel;
 import RunLab.Models.Responses.*;
 import RunLab.Models.Strava.AthleteStatistics;
 import RunLab.Models.Strava.SummaryActivity;
-import RunLab.Wrappers.Strava;
+import RunLab.wrappers.Strava;
 
 /**
  * Unit tests for RunlabApplication.

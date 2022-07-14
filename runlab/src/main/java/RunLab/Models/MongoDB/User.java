@@ -9,13 +9,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user")
 public class User extends mongodbDocument {
     @Id
-    public String id; 
+    protected String id; 
     @Indexed(unique=true, background = true)
-    public String userName;
+    protected String userName;
     private String password;
-    public String firstName;
-    public String lastName;
-    public List<thirdpartyAPIDetails> apiDetails;
+    protected String firstName;
+    protected String lastName;
+    protected List<thirdpartyAPIDetails> apiDetails;
 
     public User() {}
 
@@ -30,4 +30,29 @@ public class User extends mongodbDocument {
     public String toString() {
         return String.format("User[id=%s, username='%s', firstname='%s', lastname='%s']", id, userName, firstName, lastName);
     }
+
+    public String getUserID(){
+        return this.id;
+    }
+
+    public String getUserName(){
+        return this.userName;
+    }
+
+    public void setUserName(String username){
+        this.userName = username;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+    
 }

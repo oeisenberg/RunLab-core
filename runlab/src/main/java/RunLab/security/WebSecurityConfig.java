@@ -1,4 +1,4 @@
-package RunLab.config;
+package RunLab.security;
 
 import javax.annotation.Resource;
 

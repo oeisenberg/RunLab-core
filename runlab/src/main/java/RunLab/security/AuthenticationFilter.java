@@ -1,4 +1,4 @@
-package RunLab.config;
+package RunLab.security;
 
 import java.io.IOException;
 import java.util.Arrays;

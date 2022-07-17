@@ -1,14 +1,15 @@
 package RunLab.models;
 
 import java.time.LocalDateTime;
+import RunLab.utility.UnixConverter;
 
 public class JWTPayload {
     protected String username;
     protected String userID;
     // public T scopes;
     protected String issuer = "http://localhost:8080/runlab-api";
-    public LocalDateTime createdDateTime = LocalDateTime.now();
-    protected LocalDateTime expiraryDateTime = LocalDateTime.now().plusDays(1); 
+    protected long createdDateTime = UnixConverter.toUnix(LocalDateTime.now());
+    protected long expiraryDateTime = UnixConverter.toUnix(LocalDateTime.now().plusDays(1)); 
 
 
     public JWTPayload(String username, String id) {
@@ -21,10 +22,10 @@ public class JWTPayload {
     }
 
     public LocalDateTime getCreatedDateTime() {
-        return this.createdDateTime;
+        return UnixConverter.toDateTime(this.createdDateTime);
     }
 
     public LocalDateTime getExpiraryDateTime() {
-        return this.expiraryDateTime;
+        return UnixConverter.toDateTime(this.expiraryDateTime);
     }
 }

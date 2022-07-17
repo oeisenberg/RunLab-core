@@ -20,9 +20,12 @@ public class jwtTokenUtil {
         return payload.getExpiraryDateTime().isBefore(LocalDateTime.now()) ? true : false;
     }
 
+    // TODO: Add a header and hash to the payload.
     public static String encodeToToken(User user) {
         JWTPayload token = new JWTPayload(user.getUserName(), user.getUserID());
+        // token = header +
         String tokenAsString = gson.toJson(token);
+        // append "." + <hash of token>
         return Base64.getEncoder().encodeToString(tokenAsString.getBytes());
     }
 

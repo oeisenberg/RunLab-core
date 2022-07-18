@@ -74,4 +74,12 @@ public class APIDetails extends mongodbDocument {
     public API_type getAPIType() {
         return this.tokenType;
     }
+
+    public String getAuthenticationToken() {
+        return this.authentication_token;
+    }
+
+    public String geRefreshToken() {
+        return this.refresh_token;
+    }
 }

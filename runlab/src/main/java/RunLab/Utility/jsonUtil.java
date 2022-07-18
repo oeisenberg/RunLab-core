@@ -66,7 +66,7 @@ public class jsonUtil {
         JsonArray jsonArray = (JsonArray) attributes.get(param);
         Split[] splits = new Split[jsonArray.size()];
         for(int iSplit = 0; iSplit < jsonArray.size(); iSplit++ ){
-            Map<String, Object> newMap = JsonConverter.toMap((JsonObject) jsonArray.get(iSplit));
+            Map<String, Object> newMap = jsonUtil.toMap((JsonObject) jsonArray.get(iSplit));
             splits[iSplit] = new Split();
         }
         return splits;
@@ -76,7 +76,7 @@ public class jsonUtil {
         JsonArray jsonArray = (JsonArray) attributes.get(param);
         Lap[] laps = new Lap[jsonArray.size()];
         for(int iLap = 0; iLap < jsonArray.size(); iLap++ ){
-            Map<String, Object> newMap = JsonConverter.toMap((JsonObject) jsonArray.get(iLap));
+            Map<String, Object> newMap = jsonUtil.toMap((JsonObject) jsonArray.get(iLap));
             // laps[iLap] = new Lap(newMap);
         }
         return laps;
@@ -84,10 +84,10 @@ public class jsonUtil {
 
     public static Route toRoute(Map<String, Object> attributes, String param){
         JsonObject jsonObject = (JsonObject) attributes.get(param);
-        Map<String, Object> newMap = JsonConverter.toMap(jsonObject);
+        Map<String, Object> newMap = jsonUtil.toMap(jsonObject);
         
-        // Polyline s = new Polyline(JsonConverter.toString(newMap, "polyline"));
-        // Polyline d = new Polyline(JsonConverter.toString(newMap, "summary_polyline"));
+        // Polyline s = new Polyline(jsonUtil.toString(newMap, "polyline"));
+        // Polyline d = new Polyline(jsonUtil.toString(newMap, "summary_polyline"));
         return new Route();
     }
 }

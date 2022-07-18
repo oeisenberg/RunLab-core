@@ -4,14 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import RunLab.wrappers.Strava;
+import RunLab.wrappers.APIWrapper;
 
 @SpringBootApplication
 public class RunlabApplication {
 
     @Bean
-    public Strava stravaWrapper() {
-        return new Strava();
+    public APIWrapper apiWrapper() {
+        return new APIWrapper();
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,7 @@
 package RunLab.controllers;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import RunLab.models.codeModel;
+import RunLab.models.exceptions.InvalidRequest;
+import RunLab.models.exceptions.UnsupportedAPIException;
+import RunLab.models.mongoDB.APIDetails;
 import RunLab.models.responses.*;
 import RunLab.wrappers.*;
 
@@ -20,34 +25,31 @@ import RunLab.wrappers.*;
 public class UnifiedController {
     
     @Autowired
-    private Strava stravaWrapper;
+    private APIWrapper apiWrapper;
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     UnifiedController() {}
 
-    @GetMapping("/oauth")
-    public CustomResponse<String> oauthGET() {
-        logger.info("Check if Authenticated");
-        // pull in and update data
-        boolean isAuthenticated = this.stravaWrapper.refreshAuthTokens();
+    // @GetMapping("/oauth")
+    // public CustomResponse<String> oauthGET() {
+    //     logger.info("Check if Authenticated");
+    //     // pull in and update data
+    //     boolean isAuthenticated = this.stravaWrapper.refreshAuthTokens();
 
-        if (isAuthenticated) {
-            return new Success<String>();
-        } else {
-            return new Failure<String>();
-        }
-    }
+    //     if (isAuthenticated) {
+    //         return new Success<String>();
+    //     } else {
+    //         return new Failure<String>();
+    //     }
+    // }
 
     @PostMapping("/oauth")
-    public CustomResponse<String> oauthPOST(@RequestBody codeModel requestBody) {
+    public CustomResponse<String> oauthPOST(@RequestBody codeModel requestBody) throws UnsupportedAPIException, InvalidRequest, IOException {
         logger.info("Authentication Called");
-        Boolean dataUpdated = this.stravaWrapper.setAuthTokens(requestBody);
+        APIDetails apiDetails = this.apiWrapper.createAPIDetails(requestBody);
+        
 
-        if (dataUpdated) {
-            return new Success<String>();
-        } else {
-            return new Failure<String>();
-        }
+        return new Success<String>();
     }
 
 }

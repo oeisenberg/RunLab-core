@@ -26,7 +26,7 @@ public class ActivitiesController {
 
     private Gson gson = new Gson();
     @Autowired
-    private Strava stravaWrapper;
+    private StravaAPI stravaWrapper;
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     ActivitiesController() {}

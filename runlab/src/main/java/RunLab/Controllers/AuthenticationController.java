@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import RunLab.repositories.UserRepository;
 import RunLab.utility.jwtTokenUtil;
+import RunLab.wrappers.APIWrapper;
 import RunLab.models.LoginUser;
 import RunLab.models.RegisteringUser;
 import RunLab.models.mongoDB.APIDetails;
@@ -35,6 +36,9 @@ public class AuthenticationController {
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
 
+    @Autowired
+    private APIWrapper apiWrapper;
+
     @PostMapping("/signup")
     public User saveUser(@RequestBody RegisteringUser user) {
         User newUser = new User();
@@ -52,18 +56,17 @@ public class AuthenticationController {
         );
         SecurityContextHolder.getContext().setAuthentication(auth);
         final User user = userRepository.findByUserName(loginUser.getUsername());
-        refreshAPITokens(user);
+        userRepository.save(refreshAPITokens(user));
         Success<String> response = new Success<String>(); 
         response.setBody(jwtTokenUtil.encodeToToken(user));
         return response;
     }
 
-    private void refreshAPITokens(User user) {
-        // for all apis in User api list
-            // check if needs to be refreshed
-            // refresh
-        for (APIDetails api : user.getAPIs().values()) {
-            api.
+    private User refreshAPITokens(User user) {
+        // refreshes regardless, perhaps should check if expired before login & each req instead?
+        for (APIDetails api : user.getAPIDetails()) {
+            user.updateAPI(apiWrapper.refreshAPIDetails(api));
         }
+        return user;
     }
 }

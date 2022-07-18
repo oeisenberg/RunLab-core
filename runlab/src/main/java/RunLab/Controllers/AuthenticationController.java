@@ -17,6 +17,7 @@ import RunLab.repositories.UserRepository;
 import RunLab.utility.jwtTokenUtil;
 import RunLab.models.LoginUser;
 import RunLab.models.RegisteringUser;
+import RunLab.models.mongoDB.APIDetails;
 import RunLab.models.mongoDB.User;
 import RunLab.models.responses.CustomResponse;
 import RunLab.models.responses.Success;
@@ -51,9 +52,18 @@ public class AuthenticationController {
         );
         SecurityContextHolder.getContext().setAuthentication(auth);
         final User user = userRepository.findByUserName(loginUser.getUsername());
-        //TODO: refresh user's associated tokens
+        refreshAPITokens(user);
         Success<String> response = new Success<String>(); 
         response.setBody(jwtTokenUtil.encodeToToken(user));
         return response;
+    }
+
+    private void refreshAPITokens(User user) {
+        // for all apis in User api list
+            // check if needs to be refreshed
+            // refresh
+        for (APIDetails api : user.getAPIs().values()) {
+            api.
+        }
     }
 }

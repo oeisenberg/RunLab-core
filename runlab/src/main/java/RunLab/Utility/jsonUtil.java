@@ -8,6 +8,7 @@ import java.math.BigInteger;
 
 import com.google.gson.JsonObject;
 
+import RunLab.models.Unix;
 import RunLab.models.strava.Lap;
 import RunLab.models.strava.Route;
 import RunLab.models.strava.Split;
@@ -15,10 +16,7 @@ import RunLab.models.strava.Split;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
-public class JsonConverter {
-
-    public JsonConverter(){
-    }
+public class jsonUtil {
 
     public static Map<String, Object> toMap(JsonObject jsonObject){
         Map<String, Object> map = new HashMap<String, Object>();
@@ -30,12 +28,20 @@ public class JsonConverter {
         return map;
     }
 
+    public static Unix toUnix(Map<String, Object> attributes, String param) {
+        return new Unix(toLong(attributes, param));
+    }
+
     public static int toInt(Map<String, Object> attributes, String param){
         return Integer.parseInt(attributes.get(param).toString());
     }
 
     public static BigInteger toBigInteger(Map<String, Object> attributes, String param){
         return new BigInteger(attributes.get(param).toString());
+    }
+
+    public static Long toLong(Map<String, Object> attributes, String param){
+        return Long.valueOf(attributes.get(param).toString());
     }
 
     public static float toFloat(Map<String, Object> attributes, String param){

@@ -27,9 +27,6 @@ import RunLab.models.strava.AthleteStatistics;
 import RunLab.models.strava.SummaryActivity;
 import RunLab.utility.JsonConverter;
 
-
-// import io.micrometer.core.instrument.config.validate.Validated.Invalid;
-
 public class Strava {
 
     private String url = "https://www.strava.com/";
@@ -47,23 +44,24 @@ public class Strava {
 
     // Gets the last 30 activites
     public Response pull() throws InvalidRequest {
-        // Could look into a builder design pattern for the urls with optional parameters
+        // Could look into a builder design pattern for the urls with optional
+        // parameters
         // int before, int after, int page, int perPage
         // https://stackoverflow.com/questions/222214/managing-constructors-with-many-parameters-in-java/222295#222295
         Response response = makeAPIRequest("athlete/activities?page=1&per_page=10");
-        
+
         return response;
     }
 
-    public Response getAthleteStats(String AthleteID) throws InvalidRequest { 
+    public Response getAthleteStats(String AthleteID) throws InvalidRequest {
         Response response = makeAPIRequest("athletes/" + AthleteID + "/stats");
-        
+
         return response;
     }
 
     public Response getAthleteProfile() throws InvalidRequest {
         Response response = makeAPIRequest("athlete/");
-        
+
         return response;
     }
 
@@ -75,7 +73,8 @@ public class Strava {
             try {
                 object = (JsonObject) JsonParser.parseReader(new FileReader(file));
                 Map<String, Object> attributes = JsonConverter.toMap(object);
-                // Map<String, Object> userAttributes = JsonConverter.toMap((JsonObject) attributes.get("User_Details"));
+                // Map<String, Object> userAttributes = JsonConverter.toMap((JsonObject)
+                // attributes.get("User_Details"));
                 this.access_token = JsonConverter.toString(attributes, "access_token");
                 this.refresh_token = JsonConverter.toString(attributes, "refresh_token");
             } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
@@ -84,21 +83,19 @@ public class Strava {
         }
 
         Request request = new Request.Builder()
-            .url(this.url + "api/v3/" + uri)
-            .header("Authorization", "Bearer " + this.access_token)
-            .build();
+                .url(this.url + "api/v3/" + uri)
+                .header("Authorization", "Bearer " + this.access_token)
+                .build();
 
         return makeRequest(request);
     }
 
-    private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
-    
     private Response makeOauthRequest(String uri) throws InvalidRequest {
         Request request = new Request.Builder()
-            .post(RequestBody.create("", MEDIA_TYPE_MARKDOWN))
-            .header("Content-Length", "0")
-            .url(this.url + "oauth/" + uri)
-            .build();
+                .post(RequestBody.create("", MediaType.parse("text/x-markdown; charset=utf-8")))
+                .header("Content-Length", "0")
+                .url(this.url + "oauth/" + uri)
+                .build();
 
         return makeRequest(request);
     }
@@ -120,7 +117,7 @@ public class Strava {
 
             this.client_id = JsonConverter.toInt(attributes, "client_id");
             this.client_secret = JsonConverter.toString(attributes, "client_secret");
-            
+
             return true;
         } catch (FileNotFoundException fnfE) {
             System.err.println("File read failed");
@@ -131,9 +128,10 @@ public class Strava {
         }
     }
 
-    public boolean saveKeys() {  	
+    public boolean saveKeys() {
         Gson gson = new Gson();
-        KeysModel keys = new KeysModel(this.client_id, this.client_secret, this.access_code, this.access_token, this.refresh_token);
+        KeysModel keys = new KeysModel(this.client_id, this.client_secret, this.access_code, this.access_token,
+                this.refresh_token);
         String filepath = "W:\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json";
         try {
             FileWriter writer = new FileWriter(filepath);
@@ -147,21 +145,23 @@ public class Strava {
         return true;
     }
 
-    public boolean setAuthTokens(codeModel requestBody){
+    public boolean setAuthTokens(codeModel requestBody) {
         this.access_code = requestBody.getCode();
 
-        if (readKeys()){
+        if (readKeys()) {
             try {
-                Response r = makeOauthRequest("token?client_id="+this.client_id+"&client_secret="+this.client_secret+"&code="+this.access_code+"&grant_type=authorization_code");
+                Response r = makeOauthRequest("token?client_id=" + this.client_id + "&client_secret="
+                        + this.client_secret + "&code=" + this.access_code + "&grant_type=authorization_code");
                 String responceBody = r.body().string();
                 Map<String, Object> attributes = JsonConverter.toMap((JsonObject) JsonParser.parseString(responceBody));
 
                 this.access_token = JsonConverter.toString(attributes, "access_token");
                 this.refresh_token = JsonConverter.toString(attributes, "refresh_token");
 
-                // write these to file, save user access code and refresh token for future requests
+                // write these to file, save user access code and refresh token for future
+                // requests
                 return saveKeys();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             }
@@ -177,9 +177,9 @@ public class Strava {
             Map<String, Object> attributes = JsonConverter.toMap(object);
 
             // this.client_id = JsonConverter.toInt(attributes, "client_id");
-            // this.client_secret = JsonConverter.toString(attributes, "client_secret"); 
-            this.refresh_token = JsonConverter.toString(attributes, "refresh_token");            
-            
+            // this.client_secret = JsonConverter.toString(attributes, "client_secret");
+            this.refresh_token = JsonConverter.toString(attributes, "refresh_token");
+
             return true;
         } catch (FileNotFoundException fnfE) {
             System.err.println("File read failed");
@@ -190,17 +190,18 @@ public class Strava {
         }
     }
 
-    public boolean refreshAuthTokens(){
-        if (setRefreshToken()){
-            try{
-                Response r = makeOauthRequest("token?client_id="+this.client_id+"&client_secret="+this.client_secret+"&grant_type=refresh_token&refresh_token="+this.refresh_token);
+    public boolean refreshAuthTokens() {
+        if (setRefreshToken()) {
+            try {
+                Response r = makeOauthRequest("token?client_id=" + this.client_id + "&client_secret="
+                        + this.client_secret + "&grant_type=refresh_token&refresh_token=" + this.refresh_token);
                 String responceBody = r.body().string();
-                
+
                 Map<String, Object> attributes = JsonConverter.toMap((JsonObject) JsonParser.parseString(responceBody));
                 this.access_token = JsonConverter.toString(attributes, "access_token");
                 this.refresh_token = JsonConverter.toString(attributes, "refresh_token");
                 return true;
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             }
@@ -208,32 +209,32 @@ public class Strava {
         return false;
     }
 
-    // List Athlete Activities 
-    public void getActivities(){
+    // List Athlete Activities
+    public void getActivities() {
 
     }
 
     // Get Activity
     // public Activity getActivity(){
-    //     JsonObject jsonObject = (JsonObject) JsonParser.parseString(rawActivity);
-    //     Map<String, Object> attributes = JsonConverter.toMap(jsonObject);
-    //     return new Activity(attributes);
+    // JsonObject jsonObject = (JsonObject) JsonParser.parseString(rawActivity);
+    // Map<String, Object> attributes = JsonConverter.toMap(jsonObject);
+    // return new Activity(attributes);
     // }
 
-    public void getProfile(){
+    public void getProfile() {
         try {
             Response r = makeAPIRequest("athlete");
-             if (r.code() == 200){
+            if (r.code() == 200) {
                 String responceBody = r.body().string();
                 Map<String, Object> attributes = JsonConverter.toMap((JsonObject) JsonParser.parseString(responceBody));
                 // assign to profile obj
             } else {
                 System.err.println("Error");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-      
+
         // return new Profile();
     }
 }

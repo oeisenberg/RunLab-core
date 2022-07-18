@@ -14,6 +14,10 @@ public class Unix {
         this.value = value;
     }
 
+    public Unix(LocalDateTime date) {
+        this.value = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
     public long getValue() {
         return this.value;
     }

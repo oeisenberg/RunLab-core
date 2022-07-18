@@ -6,7 +6,7 @@ import RunLab.models.JWTPayload;
 import RunLab.models.mongoDB.User;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Base64;
 
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class jwtTokenUtil {
     private static Gson gson = new Gson();
 
     private static Boolean isTokenExpired(JWTPayload payload){
-        return payload.getExpiraryDateTime().isBefore(LocalDateTime.now()) ? true : false;
+        return payload.getExpiraryDateTime().isLessThan(Instant.now().getEpochSecond()) ? true : false;
     }
 
     // TODO: Add a header and hash to the payload.

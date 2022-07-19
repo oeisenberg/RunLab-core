@@ -18,11 +18,6 @@ public class User extends mongodbDocument {
     private String lastName;
     private HashMap<APIDetails.API_type, APIDetails> apiDetails = new HashMap<>();
 
-    private boolean isEnabled = true;
-    private boolean isAccountNonExpired = true;
-    private boolean isAccountNonLocked = true;
-    private boolean isCredentialsNonExpired = true;
-
     public User() {
     }
 
@@ -59,6 +54,10 @@ public class User extends mongodbDocument {
         return this.password;
     }
 
+    public boolean hasAPI(APIDetails.API_type api_type) {
+        return this.apiDetails.containsKey(api_type);
+    }
+
     public APIDetails getAPI(APIDetails.API_type api_type) {
         return this.apiDetails.get(api_type);
     }
@@ -74,25 +73,9 @@ public class User extends mongodbDocument {
     public boolean hasConnectedAPIs() {
         return this.apiDetails != null || this.apiDetails.size() > 0 ? true : false;
     }
-
-    public boolean isEnabled() {
-        return isEnabled;
-    }
-
-    public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
-    }
-
-    public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
-    }
-
-    public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
-    }
-
+    
     public void updateAPI(APIDetails api) {
-        this.apiDetails.replace(api.getAPIType(), api);
+        this.apiDetails.put(api.getAPIType(), api);
     }
 
     public void setUserName(String username) {

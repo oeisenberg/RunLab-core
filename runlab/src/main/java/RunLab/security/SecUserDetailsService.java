@@ -20,12 +20,12 @@ public class SecUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(username);
+        final User user = userRepository.findByUserName(username);
+
         if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }  else {
-            UserDetails details = new SecUserDetails(user);
-            return details;
+            throw new UsernameNotFoundException("User " + username + " not found");
         }
+        
+        return new SecUserDetails(user);
     }
 }

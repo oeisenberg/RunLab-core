@@ -1,5 +1,8 @@
 package RunLab.wrappers;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -28,12 +31,31 @@ public class StravaAPI implements API {
 
     private Integer client_id;
     private String client_secret;
-    private String access_code;
+    // private String access_code;
     // private String access_token; // user's
     // private String refresh_token; // user's
 
     public StravaAPI() {
+        readKeys();
+    }
 
+    private boolean readKeys() {
+        File file = new File("W:\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
+        try {
+            JsonObject object = (JsonObject) JsonParser.parseReader(new FileReader(file));
+            Map<String, Object> attributes = jsonUtil.toMap(object);
+
+            this.client_id = jsonUtil.toInt(attributes, "client_id");
+            this.client_secret = jsonUtil.toString(attributes, "client_secret");
+
+            return true;
+        } catch (FileNotFoundException fnfE) {
+            System.err.println("File read failed");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public Response makeAPIRequest(String auth_token, String uri) throws InvalidRequest {
@@ -65,12 +87,14 @@ public class StravaAPI implements API {
     }
 
     public APIDetails createAPIDetails(codeModel requestBody) throws InvalidRequest, IOException {
-        this.access_code = requestBody.getCode();
+        String access_code = requestBody.getCode();
 
         Response r = makeOauthRequest("token?client_id=" + this.client_id + "&client_secret="
-                + this.client_secret + "&code=" + this.access_code + "&grant_type=authorization_code");
+                + this.client_secret + "&code=" + access_code + "&grant_type=authorization_code");
         String responceBody = r.body().string();
         Map<String, Object> attributes = jsonUtil.toMap((JsonObject) JsonParser.parseString(responceBody));
+
+        if (!r.isSuccessful()) {throw new InvalidRequest(responceBody);}
 
         APIDetails api = new APIDetails.APIDetailsBuilder(API_type.STRAVA)
             .authenticationToken(jsonUtil.toString(attributes, "access_token"))

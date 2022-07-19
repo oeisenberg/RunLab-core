@@ -10,6 +10,9 @@ public class Unix {
 
     public long value;
 
+    // MongoRepository requires empty constructor
+    public Unix() {}
+
     public Unix(long value) {
         this.value = value;
     }

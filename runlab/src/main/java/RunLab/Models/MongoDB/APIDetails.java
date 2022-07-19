@@ -10,11 +10,14 @@ public class APIDetails extends mongodbDocument {
         STRAVA
     };
 
-    private final API_type tokenType; // Mandatory
-    private final Unix expiresAt;
-    private final Unix expiresIn;
-    private final String authentication_token;
-    private final String refresh_token;
+    private API_type tokenType; // Mandatory
+    private Unix expiresAt;
+    private Unix expiresIn;
+    private String authentication_token;
+    private String refresh_token;
+
+    // MongoRepository requires empty constructor
+    public APIDetails(){}
 
     private APIDetails(APIDetailsBuilder builder) {
         this.tokenType = builder.api_type;

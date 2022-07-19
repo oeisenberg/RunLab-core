@@ -35,9 +35,10 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             payload = jwtTokenUtil.decodeToPayload(authHeader);
             username = payload.getUserName();
         }
+
         if (username != null) {
             User user = userRepository.findByUserName(username);
-            if (jwtTokenUtil.validateToken(payload, user)){
+            if (user != null && jwtTokenUtil.validateToken(payload, user)){
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, Arrays.asList(new SimpleGrantedAuthority("USER")));
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 logger.info("authenticated user " + username + ", setting security context");

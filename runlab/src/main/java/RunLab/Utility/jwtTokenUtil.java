@@ -29,6 +29,7 @@ public class jwtTokenUtil {
         return Base64.getEncoder().encodeToString(tokenAsString.getBytes());
     }
 
+    // TODO: Remove header and hash to get the payload.
     public static JWTPayload decodeToPayload(String token) {
         String unicodeToken = new String(Base64.getDecoder().decode(token), StandardCharsets.UTF_8);
         return gson.fromJson(unicodeToken, JWTPayload.class);

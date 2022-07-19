@@ -16,7 +16,7 @@ public class User extends mongodbDocument {
     private String password;
     private String firstName;
     private String lastName;
-    private HashMap<APIDetails.API_type, APIDetails> apiDetails;
+    private HashMap<APIDetails.API_type, APIDetails> apiDetails = new HashMap<>();
 
     private boolean isEnabled = true;
     private boolean isAccountNonExpired = true;
@@ -69,6 +69,10 @@ public class User extends mongodbDocument {
 
     public Collection<APIDetails> getAPIDetails() {
         return this.apiDetails.values();
+    }
+
+    public boolean hasConnectedAPIs() {
+        return this.apiDetails != null || this.apiDetails.size() > 0 ? true : false;
     }
 
     public boolean isEnabled() {

@@ -3,6 +3,7 @@ package RunLab.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 // https://www.devglan.com/spring-security/spring-boot-jwt-auth
 // https://www.bezkoder.com/spring-boot-mongodb-login-example/
+// https://github.com/murraco/spring-boot-jwt
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -44,16 +46,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers("/v{\\d+}/token/*").permitAll()
-                .antMatchers("/v{\\d+}/token/*", "/signup").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic();
-        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        // Disables Cross Origin Resource Sharing and Cross Site Request Forgery
+        http.cors().and().csrf().disable();
+        
+        // No session will be created or used by Spring Security
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        // .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-        // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // Pattern match for my entry points and disallow anything else
+        http.authorizeRequests()
+            .antMatchers("/v{\\d+}/token/*").permitAll()
+            .antMatchers("/v{\\d+}/token/*", "/signup").permitAll()
+            .anyRequest().authenticated();
+            
+        // Redirects a user if they don't have enough permissions
+        http.exceptionHandling().accessDeniedPage("/login");
+        
+        // Optional: allows testing from a web browser.
+        http.httpBasic();
+
+        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }

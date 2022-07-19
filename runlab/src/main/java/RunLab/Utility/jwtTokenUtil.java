@@ -36,6 +36,7 @@ public class jwtTokenUtil {
     }
 
     public static Boolean validateToken(JWTPayload payload, User user) {
+        if (user == null) {throw new NullPointerException("User not found");}
         return payload.getUserName().equals(user.getUserName()) && !isTokenExpired(payload) ? true : false;
     }
 }

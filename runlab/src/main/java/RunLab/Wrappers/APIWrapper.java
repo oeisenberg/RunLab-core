@@ -20,10 +20,10 @@ public class APIWrapper {
     public APIDetails refreshAPIDetails(APIDetails apiDetails) {
         switch(apiDetails.getAPIType()) {
             case STRAVA:
-                stravaAPI.refreshAPIDetails(apiDetails);
-            break;
+                return stravaAPI.refreshAPIDetails(apiDetails);
+            default:
+                return apiDetails;
         }
-        return apiDetails;
     }
 
     public APIDetails createAPIDetails(User user, codeModel requestBody) throws UnsupportedAPIException, InvalidRequest, IOException {

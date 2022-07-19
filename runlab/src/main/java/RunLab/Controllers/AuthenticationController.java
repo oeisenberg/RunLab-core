@@ -65,7 +65,7 @@ public class AuthenticationController {
     private User refreshAPITokens(User user) {
         // refreshes regardless, perhaps should check if expired before login & each req instead?
         for (APIDetails api : user.getAPIDetails()) { // (new user this is null)
-            // user.updateAPI(apiWrapper.refreshAPIDetails(api));
+            user.updateAPI(apiWrapper.refreshAPIDetails(api));
         }
         return user;
     }

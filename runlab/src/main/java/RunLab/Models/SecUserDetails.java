@@ -33,21 +33,25 @@ public class SecUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.user.isEnabled();
+        // return this.user.isEnabled();
+        return true;
     }
     
     @Override
     public boolean isAccountNonExpired() {
-        return this.user.isAccountNonExpired();
+        // return this.user.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.user.isAccountNonLocked();
+        // return this.user.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return this.user.isCredentialsNonExpired();
+        // return this.user.isCredentialsNonExpired();
+        return true;
     }
 }

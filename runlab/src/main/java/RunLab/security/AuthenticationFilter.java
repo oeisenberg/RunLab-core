@@ -1,7 +1,6 @@
 package RunLab.security;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,43 +8,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import RunLab.models.Jwts;
-import RunLab.models.mongoDB.User;
-import RunLab.repositories.UserRepository;
 import RunLab.utility.jwtTokenUtil;
 
 public class AuthenticationFilter extends OncePerRequestFilter {
+
     @Autowired
-    private UserRepository userRepository;
+    private jwtTokenUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        String username = null;
-        Jwts payload = null;
-        String authHeader = req.getHeader("Authorization");
+        String token = jwtUtil.resolveToken(req);
 
-        if (authHeader != null && authHeader.startsWith("Bearer")) {
-            authHeader = authHeader.replace("Bearer ", "");
-            payload = jwtTokenUtil.decodeToPayload(authHeader);
-            username = payload.getUserName();
-        }
-
-        if (username != null) {
-            User user = userRepository.findByUserName(username);
-            if (user != null && jwtTokenUtil.validateToken(payload, user)){
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, Arrays.asList(new SimpleGrantedAuthority("USER")));
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-                logger.info("authenticated user " + username + ", setting security context");
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            if (token != null && jwtUtil.validateToken(token)) {
+                Authentication auth = jwtUtil.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }
+        } catch (Exception ex) {
+            SecurityContextHolder.clearContext();
+            res.sendError(400, ex.getMessage()); // ex.getHttpStatus().value()
         }
-        
         chain.doFilter(req, res);
     }
 }

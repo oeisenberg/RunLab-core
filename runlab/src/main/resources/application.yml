@@ -9,3 +9,9 @@ spring:
             port: 27017
             database: RunLab
             auto-index-creation: true
+
+security:
+    jwt:
+        token:
+            secret-key: special-key
+            expire-length: 3600000 # 1 hr default, 60 minutes * 60 seconds * 1000 miliseconds

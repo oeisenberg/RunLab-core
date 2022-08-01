@@ -1,7 +1,6 @@
 package RunLab.controllers.Strava;
 
 import java.io.IOException;
-import java.security.Principal;
 
 import okhttp3.Response;
 
@@ -13,13 +12,12 @@ import RunLab.models.mongoDB.APIDetails;
 import RunLab.models.mongoDB.User;
 import RunLab.models.responses.*;
 import RunLab.models.strava.*;
-import RunLab.repositories.UserRepository;
 import RunLab.wrappers.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,15 +34,14 @@ public class AthleteController {
     private APIWrapper apiWrapper;
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
-    private UserRepository userRepository;
 
     AthleteController() {
     }
 
     @GetMapping("/profile")
-    public CustomResponse<AthleteProfile> getAthleteProfile(Principal principal) throws InvalidRequest, UnsupportedAPIException, IOException {
+    public CustomResponse<AthleteProfile> getAthleteProfile() throws InvalidRequest, UnsupportedAPIException, IOException {
         logger.info("Athlete profile Called");
-        User user = (User) principal;
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Response response = this.apiWrapper.makeAPIRequest(user.getAPI(APIDetails.API_type.STRAVA), "athlete/");
         if (response.isSuccessful()) {
             Success<AthleteProfile> r = new Success<AthleteProfile>();
@@ -57,10 +54,10 @@ public class AthleteController {
     }
 
     @GetMapping(value = { "/statistics" })
-    public CustomResponse<AthleteStatistics> getAthleteStatistics (Principal principal,
+    public CustomResponse<AthleteStatistics> getAthleteStatistics (
             @RequestParam(value = "ID", defaultValue = "16443776") String ID) throws InvalidRequest, UnsupportedAPIException, IOException {
         logger.info("Athlete Statistics Called");
-        User user = (User) principal;
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Response response = this.apiWrapper.makeAPIRequest(user.getAPI(APIDetails.API_type.STRAVA), "athletes/" + ID + "/stats");
         if (response.isSuccessful()) {
             Success<AthleteStatistics> r = new Success<AthleteStatistics>();
@@ -74,9 +71,9 @@ public class AthleteController {
     }
 
     @GetMapping("/activities")
-    public CustomResponse<SummaryActivity[]> refresh(Principal principal) throws InvalidRequest, UnsupportedAPIException, IOException {
+    public CustomResponse<SummaryActivity[]> refresh() throws InvalidRequest, UnsupportedAPIException, IOException {
         logger.info("Refresh Called");
-        User user = (User) principal;
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Response response = this.apiWrapper.makeAPIRequest(user.getAPI(APIDetails.API_type.STRAVA), "athlete/activities?page=1&per_page=10");
         if (response.isSuccessful()) {
             Success<SummaryActivity[]> r = new Success<SummaryActivity[]>();

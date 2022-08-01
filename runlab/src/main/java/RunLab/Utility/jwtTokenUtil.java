@@ -1,43 +1,97 @@
 package RunLab.utility;
 
-import com.google.gson.Gson;
-
-import RunLab.models.Jwts;
 import RunLab.models.mongoDB.User;
+import RunLab.repositories.UserRepository;
 
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.Base64;
 
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.Date;
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.Gson;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.gson.io.GsonSerializer;
+import io.jsonwebtoken.security.Keys;
+
 @Component
+// https://github.com/murraco/spring-boot-jwt/blob/master/src/main/java/murraco/security/JwtTokenProvider.java
 public class jwtTokenUtil {
 
-    private static Gson gson = new Gson();
+    @Value("${security.jwt.token.secret-key:secret-key}")
+    private String secretKey;
 
-    private static Boolean isTokenExpired(Jwts payload){
-        return payload.getExpiraryDateTime().isLessThan(Instant.now().getEpochSecond()) ? true : false;
+    @Value("${security.jwt.token.expire-length:86400000}") // 1D
+    private long validityDurationInMilliseconds;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public String createToken(User user) {
+        Claims claims = Jwts.claims().setSubject(user.getUserName());
+
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + 3600000 * 24);
+        return Jwts.builder()
+            .serializeToJsonWith(new GsonSerializer(new Gson())) // getting an error with default serialiser.
+            .setClaims(claims)
+            .setIssuedAt(now)
+            .setExpiration(validity)
+            .signWith(Keys.hmacShaKeyFor(this.secretKey.getBytes(StandardCharsets.UTF_8)))
+            .compact();
     }
 
-    // TODO: Add a header and hash to the payload.
-    public static String encodeToToken(User user) {
-        Jwts token = new Jwts(user.getUserName(), user.getUserID());
-        // token = header +
-        String tokenAsString = gson.toJson(token);
-        // append "." + <hash of token>
-        return Base64.getEncoder().encodeToString(tokenAsString.getBytes());
+    public Authentication getAuthentication(String token) {
+        User user = userRepository.findByUserName(getUsername(token));
+
+        if (user != null) {
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, Arrays.asList(new SimpleGrantedAuthority("USER")));
+            return auth;
+        }
+
+        return null;
     }
 
-    // TODO: Remove header and hash to get the payload.
-    public static Jwts decodeToPayload(String token) {
-        String unicodeToken = new String(Base64.getDecoder().decode(token), StandardCharsets.UTF_8);
-        return gson.fromJson(unicodeToken, Jwts.class);
+    public String getUsername(String token) {
+        return Jwts.parserBuilder()
+            .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+     }
+
+    public String resolveToken(HttpServletRequest req) {
+        String bearerToken = req.getHeader("Authorization");
+
+        if (bearerToken != null && bearerToken.startsWith("Bearer")) {
+            return bearerToken.replace("Bearer ", "");
+        }
+        return null;
     }
 
-    public static Boolean validateToken(Jwts payload, User user) {
-        // TODO: Make custom ex for call.
-        if (user == null) {throw new NullPointerException("User not found");}
-        return payload.getUserName().equals(user.getUserName()) && !isTokenExpired(payload) ? true : false;
+    // https://github.com/jwtk/jjwt#jws-create-key
+    // TO DO: Create custom exception to throw
+    public Boolean validateToken(String token) throws Exception {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (JwtException ex) {
+            throw new Exception("Expired or invalid JWT token");
+        }
     }
 }

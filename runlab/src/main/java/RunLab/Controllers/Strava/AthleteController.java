@@ -33,7 +33,6 @@ public class AthleteController {
     @Autowired
     private APIWrapper apiWrapper;
     private Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
 
     AthleteController() {
     }

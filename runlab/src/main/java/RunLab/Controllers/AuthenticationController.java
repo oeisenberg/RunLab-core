@@ -39,6 +39,9 @@ public class AuthenticationController {
     @Autowired
     private APIWrapper apiWrapper;
 
+    @Autowired
+    private jwtTokenUtil jwtUtil;
+
     @PostMapping("/signup")
     public User saveUser(@RequestBody RegisteringUser user) {
         User newUser = new User();
@@ -58,7 +61,7 @@ public class AuthenticationController {
         final User user = userRepository.findByUserName(loginUser.getUsername());
         userRepository.save(refreshAPITokens(user));
         Success<String> response = new Success<String>(); 
-        response.setBody(jwtTokenUtil.encodeToToken(user));
+        response.setBody(jwtUtil.createToken(user));
         return response;
     }
 

@@ -1,5 +1,6 @@
 package RunLab.utility;
 
+import RunLab.models.exceptions.CustomException;
 import RunLab.models.mongoDB.User;
 import RunLab.repositories.UserRepository;
 
@@ -12,6 +13,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -90,8 +92,8 @@ public class jwtTokenUtil {
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (JwtException ex) {
-            throw new Exception("Expired or invalid JWT token");
+        } catch (JwtException | IllegalArgumentException ex) {
+            throw new CustomException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

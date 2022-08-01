@@ -29,3 +29,8 @@ RunLab Dashboard.keys
 keys.json
 mongo.json
 mapbox.json
+
+# Ignore applicaiton.yml and associated meta file
+# Ran `git update-index --assume-unchanged` on applicaiton.yml as it now contains a secret
+# To track changes agan run `git update-index --no-assume-unchanged <file>`
+**/META-INF/**

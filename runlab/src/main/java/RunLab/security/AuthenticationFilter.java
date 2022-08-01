@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import RunLab.models.JWTPayload;
+import RunLab.models.Jwts;
 import RunLab.models.mongoDB.User;
 import RunLab.repositories.UserRepository;
 import RunLab.utility.jwtTokenUtil;
@@ -27,7 +27,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         String username = null;
-        JWTPayload payload = null;
+        Jwts payload = null;
         String authHeader = req.getHeader("Authorization");
 
         if (authHeader != null && authHeader.startsWith("Bearer")) {

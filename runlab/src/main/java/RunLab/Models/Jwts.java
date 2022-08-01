@@ -2,7 +2,7 @@ package RunLab.models;
 
 import java.time.LocalDateTime;
 
-public class JWTPayload {
+public class Jwts {
     protected String username;
     protected String userID;
     // public T scopes;
@@ -11,7 +11,7 @@ public class JWTPayload {
     protected Unix expiraryDateTime = new Unix(LocalDateTime.now().plusDays(1)); 
 
 
-    public JWTPayload(String username, String id) {
+    private Jwts(String username, String id) {
         this.username = username;
         this.userID = id;
     }

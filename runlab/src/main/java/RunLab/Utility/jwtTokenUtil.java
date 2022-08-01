@@ -2,7 +2,7 @@ package RunLab.utility;
 
 import com.google.gson.Gson;
 
-import RunLab.models.JWTPayload;
+import RunLab.models.Jwts;
 import RunLab.models.mongoDB.User;
 
 import java.nio.charset.StandardCharsets;
@@ -16,13 +16,13 @@ public class jwtTokenUtil {
 
     private static Gson gson = new Gson();
 
-    private static Boolean isTokenExpired(JWTPayload payload){
+    private static Boolean isTokenExpired(Jwts payload){
         return payload.getExpiraryDateTime().isLessThan(Instant.now().getEpochSecond()) ? true : false;
     }
 
     // TODO: Add a header and hash to the payload.
     public static String encodeToToken(User user) {
-        JWTPayload token = new JWTPayload(user.getUserName(), user.getUserID());
+        Jwts token = new Jwts(user.getUserName(), user.getUserID());
         // token = header +
         String tokenAsString = gson.toJson(token);
         // append "." + <hash of token>
@@ -30,12 +30,12 @@ public class jwtTokenUtil {
     }
 
     // TODO: Remove header and hash to get the payload.
-    public static JWTPayload decodeToPayload(String token) {
+    public static Jwts decodeToPayload(String token) {
         String unicodeToken = new String(Base64.getDecoder().decode(token), StandardCharsets.UTF_8);
-        return gson.fromJson(unicodeToken, JWTPayload.class);
+        return gson.fromJson(unicodeToken, Jwts.class);
     }
 
-    public static Boolean validateToken(JWTPayload payload, User user) {
+    public static Boolean validateToken(Jwts payload, User user) {
         // TODO: Make custom ex for call.
         if (user == null) {throw new NullPointerException("User not found");}
         return payload.getUserName().equals(user.getUserName()) && !isTokenExpired(payload) ? true : false;

@@ -1,9 +1,14 @@
-package RunLab.Models;
+package RunLab.models;
 
 public class codeModel {
-    private String code;
+    public String code;
+    public String apiType;
 
     public String getCode() {
         return this.code;
+    }
+
+    public String getAPIType() {
+        return this.apiType;
     }
 }

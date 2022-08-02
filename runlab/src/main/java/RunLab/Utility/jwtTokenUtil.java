@@ -84,7 +84,6 @@ public class jwtTokenUtil {
     }
 
     // https://github.com/jwtk/jjwt#jws-create-key
-    // TO DO: Create custom exception to throw
     public Boolean validateToken(String token) throws Exception {
         try {
             Jwts.parserBuilder()

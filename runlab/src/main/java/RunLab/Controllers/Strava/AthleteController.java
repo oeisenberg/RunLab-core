@@ -1,4 +1,4 @@
-package RunLab.controllers.Strava;
+package RunLab.controllers.strava;
 
 import java.io.IOException;
 

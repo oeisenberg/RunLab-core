@@ -16,7 +16,7 @@ import java.util.Map;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import runlab.models.codeModel;
+import runlab.models.CodeModel;
 import runlab.models.exceptions.InvalidRequest;
 import runlab.models.mongoDB.APIDetails;
 import runlab.models.mongoDB.APIDetails.API_type;
@@ -86,7 +86,7 @@ public class StravaAPI implements API {
         }
     }
 
-    public APIDetails createAPIDetails(codeModel requestBody) throws InvalidRequest, IOException {
+    public APIDetails createAPIDetails(CodeModel requestBody) throws InvalidRequest, IOException {
         String access_code = requestBody.getCode();
 
         Response r = makeOauthRequest("token?client_id=" + this.client_id + "&client_secret="

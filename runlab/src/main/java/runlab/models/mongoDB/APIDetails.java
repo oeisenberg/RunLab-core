@@ -4,7 +4,7 @@ import java.time.Instant;
 
 import runlab.models.Unix;
 
-public class APIDetails extends mongodbDocument {
+public class APIDetails extends DBdocument {
 
     public enum API_type {
         STRAVA

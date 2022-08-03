@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
-public class User extends mongodbDocument {
+public class User extends DBdocument {
     @Id
     private String id;
     @Indexed(unique = true, background = true)

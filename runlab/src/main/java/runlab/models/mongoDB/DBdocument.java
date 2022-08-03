@@ -2,6 +2,6 @@ package runlab.models.mongoDB;
 
 import java.time.LocalDateTime;
 
-public abstract class Document {
+public abstract class DBdocument {
     public LocalDateTime createdDateTime = LocalDateTime.now();
 }

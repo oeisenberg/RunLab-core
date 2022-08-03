@@ -1,4 +1,4 @@
-package RunLab.models.responses;
+package runlab.models.responses;
 
 public abstract class CustomResponse<T> {
     protected int status = 400;

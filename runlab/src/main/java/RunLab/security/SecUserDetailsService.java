@@ -1,4 +1,4 @@
-package RunLab.security;
+package runlab.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import RunLab.models.SecUserDetails;
-import RunLab.models.mongoDB.User;
-import RunLab.repositories.UserRepository;
+import runlab.models.SecUserDetails;
+import runlab.models.mongoDB.User;
+import runlab.repositories.UserRepository;
 
 // A seperate service to be injected inside the AuthenticationManagerBuilder.
 // https://stackoverflow.com/questions/29606290/authentication-with-spring-security-spring-data-mongodb

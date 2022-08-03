@@ -1,4 +1,4 @@
-package RunLab.security;
+package runlab.security;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import RunLab.utility.jwtTokenUtil;
+import runlab.utility.jwtTokenUtil;
 
 public class AuthenticationFilter extends OncePerRequestFilter {
 

@@ -1,4 +1,4 @@
-package RunLab.models;
+package runlab.models;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

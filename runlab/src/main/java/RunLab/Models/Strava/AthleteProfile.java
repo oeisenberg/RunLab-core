@@ -1,4 +1,4 @@
-package RunLab.models.strava;
+package runlab.models.strava;
 
 public class AthleteProfile {
     private int id;

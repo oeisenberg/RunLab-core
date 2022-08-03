@@ -1,4 +1,4 @@
-package RunLab.wrappers;
+package runlab.wrappers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,13 +16,13 @@ import java.util.Map;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import RunLab.models.codeModel;
-import RunLab.models.exceptions.InvalidRequest;
-import RunLab.models.mongoDB.APIDetails;
-import RunLab.models.mongoDB.APIDetails.API_type;
-import RunLab.models.strava.AthleteStatistics;
-import RunLab.models.strava.SummaryActivity;
-import RunLab.utility.jsonUtil;
+import runlab.models.codeModel;
+import runlab.models.exceptions.InvalidRequest;
+import runlab.models.mongoDB.APIDetails;
+import runlab.models.mongoDB.APIDetails.API_type;
+import runlab.models.strava.AthleteStatistics;
+import runlab.models.strava.SummaryActivity;
+import runlab.utility.jsonUtil;
 
 public class StravaAPI implements API {
 
@@ -40,7 +40,7 @@ public class StravaAPI implements API {
     }
 
     private boolean readKeys() {
-        File file = new File("W:\\Dropbox\\Programming\\RunLab\\backend\\runlab\\keys.json");
+        File file = new File("W:\\Dropbox\\Programming\\runlab\\backend\\runlab\\keys.json");
         try {
             JsonObject object = (JsonObject) JsonParser.parseReader(new FileReader(file));
             Map<String, Object> attributes = jsonUtil.toMap(object);

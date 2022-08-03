@@ -1,4 +1,4 @@
-package RunLab.models.strava;
+package runlab.models.strava;
 
 public class ActivityTotal {
     private int count;

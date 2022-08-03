@@ -1,8 +1,8 @@
-package RunLab.models.mongoDB;
+package runlab.models.mongoDB;
 
 import java.time.Instant;
 
-import RunLab.models.Unix;
+import runlab.models.Unix;
 
 public class APIDetails extends mongodbDocument {
 

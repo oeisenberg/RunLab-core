@@ -1,4 +1,4 @@
-package RunLab.models.responses;
+package runlab.models.responses;
 
 public class Success<T> extends CustomResponse<T> {
 

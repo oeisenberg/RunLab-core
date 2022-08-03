@@ -1,4 +1,4 @@
-package RunLab.models.responses;
+package runlab.models.responses;
 
 public class PullFailure<T> extends Failure<T> {
 

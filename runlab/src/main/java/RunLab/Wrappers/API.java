@@ -1,12 +1,12 @@
-package RunLab.wrappers;
+package runlab.wrappers;
 
 import java.io.IOException;
 
 import okhttp3.Response;
 
-import RunLab.models.codeModel;
-import RunLab.models.exceptions.InvalidRequest;
-import RunLab.models.mongoDB.APIDetails;
+import runlab.models.codeModel;
+import runlab.models.exceptions.InvalidRequest;
+import runlab.models.mongoDB.APIDetails;
 
 public interface API {
     public APIDetails refreshAPIDetails(APIDetails api_details);

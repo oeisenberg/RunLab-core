@@ -1,15 +1,15 @@
-package RunLab.wrappers;
+package runlab.wrappers;
 
 import java.io.IOException;
 
 import okhttp3.Response;
 
-import RunLab.models.codeModel;
-import RunLab.models.exceptions.InvalidRequest;
-import RunLab.models.exceptions.UnsupportedAPIException;
-import RunLab.models.mongoDB.APIDetails;
-import RunLab.models.mongoDB.User;
-import RunLab.models.mongoDB.APIDetails.API_type;
+import runlab.models.codeModel;
+import runlab.models.exceptions.InvalidRequest;
+import runlab.models.exceptions.UnsupportedAPIException;
+import runlab.models.mongoDB.APIDetails;
+import runlab.models.mongoDB.User;
+import runlab.models.mongoDB.APIDetails.API_type;
 
 public class APIWrapper {
 

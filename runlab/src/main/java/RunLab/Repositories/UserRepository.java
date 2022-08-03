@@ -1,11 +1,11 @@
-package RunLab.repositories;
+package runlab.repositories;
 
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-import RunLab.models.mongoDB.User;
+import runlab.models.mongoDB.User;
 
 public interface UserRepository extends MongoRepository<User, String>{
     @Query("{userName:'?0'}")

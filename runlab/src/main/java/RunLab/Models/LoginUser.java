@@ -1,4 +1,4 @@
-package RunLab.models;
+package runlab.models;
 
 public class LoginUser {
     protected String username;

@@ -1,8 +1,9 @@
-package RunLab.controllers;
+package runlab.controllers;
 
 import javax.naming.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +14,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import RunLab.repositories.UserRepository;
-import RunLab.utility.jwtTokenUtil;
-import RunLab.wrappers.APIWrapper;
-import RunLab.models.LoginUser;
-import RunLab.models.RegisteringUser;
-import RunLab.models.mongoDB.APIDetails;
-import RunLab.models.mongoDB.User;
-import RunLab.models.responses.CustomResponse;
-import RunLab.models.responses.Success;
+import runlab.repositories.UserRepository;
+import runlab.utility.jwtTokenUtil;
+import runlab.wrappers.APIWrapper;
+import runlab.models.LoginUser;
+import runlab.models.RegisteringUser;
+import runlab.models.mongoDB.APIDetails;
+import runlab.models.mongoDB.User;
+import runlab.models.responses.CustomResponse;
+import runlab.models.responses.Success;
 
 @RestController
 @RequestMapping("/v1/token")
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 public class AuthenticationController {
 
     @Autowired

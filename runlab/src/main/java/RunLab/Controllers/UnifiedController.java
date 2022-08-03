@@ -1,4 +1,4 @@
-package RunLab.controllers;
+package runlab.controllers;
 
 import java.io.IOException;
 
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import RunLab.models.codeModel;
-import RunLab.models.exceptions.InvalidRequest;
-import RunLab.models.exceptions.UnsupportedAPIException;
-import RunLab.models.mongoDB.APIDetails;
-import RunLab.models.mongoDB.User;
-import RunLab.models.responses.*;
-import RunLab.repositories.UserRepository;
-import RunLab.wrappers.*;
+import runlab.models.codeModel;
+import runlab.models.exceptions.InvalidRequest;
+import runlab.models.exceptions.UnsupportedAPIException;
+import runlab.models.mongoDB.APIDetails;
+import runlab.models.mongoDB.User;
+import runlab.models.responses.*;
+import runlab.repositories.UserRepository;
+import runlab.wrappers.*;
 
 @RestController
 @RequestMapping("/v1")

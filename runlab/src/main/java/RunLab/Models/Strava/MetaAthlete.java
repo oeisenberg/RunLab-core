@@ -1,4 +1,4 @@
-package RunLab.models.strava;
+package runlab.models.strava;
 
 // Parameters used for Gson JSON serialisation.
 @SuppressWarnings("unused")

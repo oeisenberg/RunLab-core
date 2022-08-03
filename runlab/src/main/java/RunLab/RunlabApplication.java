@@ -1,10 +1,10 @@
-package RunLab;
+package runlab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import RunLab.wrappers.APIWrapper;
+import runlab.wrappers.APIWrapper;
 
 @SpringBootApplication
 public class RunlabApplication {

@@ -1,4 +1,4 @@
-package RunLab.models.exceptions;
+package runlab.models.exceptions;
 
 import org.springframework.http.HttpStatus;
 

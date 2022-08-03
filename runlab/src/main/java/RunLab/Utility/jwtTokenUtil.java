@@ -1,8 +1,8 @@
-package RunLab.utility;
+package runlab.utility;
 
-import RunLab.models.exceptions.CustomException;
-import RunLab.models.mongoDB.User;
-import RunLab.repositories.UserRepository;
+import runlab.models.exceptions.CustomException;
+import runlab.models.mongoDB.User;
+import runlab.repositories.UserRepository;
 
 import java.nio.charset.StandardCharsets;
 

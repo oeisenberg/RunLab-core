@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import runlab.models.codeModel;
+import runlab.models.CodeModel;
 import runlab.models.exceptions.InvalidRequest;
 import runlab.models.exceptions.UnsupportedAPIException;
 import runlab.models.mongoDB.APIDetails;
@@ -37,7 +37,7 @@ public class UnifiedController {
     UnifiedController() {}
 
     @PostMapping("/register")
-    public CustomResponse<String> registerAPI(Authentication auth, @RequestBody codeModel requestBody) throws UnsupportedAPIException, InvalidRequest, IOException {
+    public CustomResponse<String> registerAPI(Authentication auth, @RequestBody CodeModel requestBody) throws UnsupportedAPIException, InvalidRequest, IOException {
         User user = (User) auth.getPrincipal();
         APIDetails apiDetails = this.apiWrapper.createAPIDetails(user, requestBody);
         

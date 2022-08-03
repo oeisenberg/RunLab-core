@@ -1,4 +1,4 @@
-package RunLab.controllers.strava;
+package runlab.controllers.strava;
 
 import java.io.IOException;
 
@@ -6,10 +6,10 @@ import okhttp3.Response;
 
 import com.google.gson.Gson;
 
-import RunLab.models.exceptions.InvalidRequest;
-import RunLab.models.responses.*;
-import RunLab.models.strava.*;
-import RunLab.wrappers.*;
+import runlab.models.exceptions.InvalidRequest;
+import runlab.models.responses.*;
+import runlab.models.strava.*;
+import runlab.wrappers.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package runlab.models;
 
-public class codeModel {
+public class CodeModel {
     public String code;
     public String apiType;
 

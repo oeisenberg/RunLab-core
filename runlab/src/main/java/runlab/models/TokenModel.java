@@ -1,12 +1,12 @@
 package runlab.models;
 
-public class tokenModel {
+public class TokenModel {
     private String accessToken;
     private String refreshToken;
 
-    tokenModel() {} 
+    TokenModel() {} 
 
-    tokenModel(String accessToken, String refreshToken){
+    TokenModel(String accessToken, String refreshToken){
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
